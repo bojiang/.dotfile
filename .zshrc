@@ -113,8 +113,9 @@ alias gra="git rebase --abort"
 alias gbcl="git branch --merged | xargs git branch -d"
 alias gp="git push origin HEAD"
 
+OMZ_PROMPT="$PROMPT"
 # shell
-PROMPT='$USER $([ -d .git ] && echo "git:"$(git config user.name)"("$(git rev-parse --abbrev-ref HEAD)") ")'"${PROMPT}"
+PROMPT='$USER $([ -d .git ] && echo "git:"$(git config user.name)"("$(git rev-parse --abbrev-ref HEAD)") ")'"${OMZ_PROMPT}"
 alias di="echo -ne '\007'"
 
 # dotfile
