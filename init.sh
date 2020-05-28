@@ -1,4 +1,19 @@
-#!/bin/sh
+#!/bin/bash
+if [ ! -f $PWD/.dotfile_flag ] ; then
+	echo "please run init.sh from the .dotfile directory"
+	exit 1
+fi
+
+if [ $PWD != $HOME/.dotfile ] ; then
+	echo "please make sure .dotfile is in your HOME directory"
+	exit 1
+fi
+
+if [[ $(tmux -V 2>&1 | grep -Po '(?<=tmux )(.+)') < "3.0a" ]] ; then
+	echo ".dotfile requires tmux>=3.0a"
+	exit 1
+fi
+
 BACKUP_DIR=$PWD/backup/$(date +"%Y%m%d_%H%M%S")
 
 mkdir -p $BACKUP_DIR/git
@@ -26,3 +41,4 @@ done
 ln -s $PWD/git/.gitignore $HOME/.gitignore
 ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 
+echo "done, please run ./update.sh if needed."
