@@ -41,4 +41,4 @@ done
 ln -s $PWD/git/.gitignore $HOME/.gitignore
 ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 
-echo "done, please run ./update.sh if needed."
+echo "done, don't forget to run ./update.sh if needed."
