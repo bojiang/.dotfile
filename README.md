@@ -1,6 +1,8 @@
 # .dotfile
 
-A dotfile to rule them all.
+One dotfile to rule them all.
+
+![preview vim.png](./screenshot/vim.png)
 
 Featured:
 * oh-my-zsh
