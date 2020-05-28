@@ -1,0 +1,17 @@
+{
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "black",
+  "python.formatting.blackArgs": ["--skip-string-normalization"],
+  "coc.preferences.formatOnSaveFiletypes": ["python", "json"],
+  "coc.preferences.hoverTarget": "echo",
+  "signature.target": "echo",
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+  "json.format.enable": true,
+  "explorer.file.showHiddenFiles": true,
+  "explorer.file.tabCD": false,
+  "explorer.keyMappings": {
+    "<cr>": ["expandable?", "expand", "open"]
+  },
+  "explorer.icon.enableNerdfont": true
+}

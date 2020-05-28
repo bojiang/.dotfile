@@ -1,0 +1,14 @@
+# This is Git's per-user configuration file.
+[core]
+	editor = vim
+	excludesfile=~/.gitignore
+[push]
+	default = simple
+[merge]
+	tool = vimdiff
+[diff]
+	tool = vimdiff
+[credential]
+	helper = cache --timeout=86400
+[oh-my-zsh]
+	hide-status = 1

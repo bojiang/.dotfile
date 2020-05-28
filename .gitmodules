@@ -1,0 +1,54 @@
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
+[submodule ".vim/plugged/nerdcommenter"]
+	path = .vim/plugged/nerdcommenter
+	url = https://github.com/preservim/nerdcommenter.git
+[submodule ".vim/plugged/ag.vim"]
+	path = .vim/plugged/ag.vim
+	url = https://github.com/rking/ag.vim.git
+[submodule ".vim/plugged/coc.nvim"]
+	path = .vim/plugged/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule ".vim/plugged/vim-code-dark"]
+	path = .vim/plugged/vim-code-dark
+	url = https://github.com/tomasiser/vim-code-dark.git
+[submodule ".vim/plugged/vim-startify"]
+	path = .vim/plugged/vim-startify
+	url = https://github.com/mhinz/vim-startify.git
+[submodule ".vim/plugged/vim-devicons"]
+	path = .vim/plugged/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule ".tmux/plugins/tmux-sensible"]
+	path = .tmux/plugins/tmux-sensible
+	url = https://git::@github.com/tmux-plugins/tmux-sensible
+[submodule ".tmux/plugins/tmux-cpu"]
+	path = .tmux/plugins/tmux-cpu
+	url = https://git::@github.com/tmux-plugins/tmux-cpu
+[submodule ".tmux/plugins/tmux-net-speed"]
+	path = .tmux/plugins/tmux-net-speed
+	url = https://git::@github.com/tmux-plugins/tmux-net-speed
+[submodule ".tmux/plugins/tmux-resurrect"]
+	path = .tmux/plugins/tmux-resurrect
+	url = https://git::@github.com/tmux-plugins/tmux-resurrect
+[submodule ".tmux/plugins/tmux-continuum"]
+	path = .tmux/plugins/tmux-continuum
+	url = https://git::@github.com/tmux-plugins/tmux-continuum
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule ".tmux/plugins/tmux-battery"]
+	path = .tmux/plugins/tmux-battery
+	url = https://git::@github.com/tmux-plugins/tmux-battery
+[submodule ".tmux/plugins/tmux-current-pane-hostname"]
+	path = .tmux/plugins/tmux-current-pane-hostname
+	url = https://git::@github.com/soyuka/tmux-current-pane-hostname
+[submodule ".vim/plugged/vim-lastplace"]
+	path = .vim/plugged/vim-lastplace
+	url = https://github.com/farmergreg/vim-lastplace.git
+[submodule ".vim/plugged/vim-indent-guides"]
+	path = .vim/plugged/vim-indent-guides
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "tool/docker-clean"]
+	path = tool/docker-clean
+	url = https://github.com/ZZROTDesign/docker-clean
