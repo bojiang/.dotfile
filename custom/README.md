@@ -1,0 +1,2 @@
+Your custom config:
+* ./zshrc
