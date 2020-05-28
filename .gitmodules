@@ -51,4 +51,4 @@
 	url = https://github.com/nathanaelkane/vim-indent-guides.git
 [submodule "tool/docker-clean"]
 	path = tool/docker-clean
-	url = https://github.com/ZZROTDesign/docker-clean
+	url = https://github.com/ZZROTDesign/docker-clean.git
