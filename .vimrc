@@ -60,7 +60,7 @@ nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
 
-nmap <C-g> :Ag <cword><CR>
+nmap <C-g> :Ag -w <cword><CR>
 nmap <C-f> :CocList files<CR>
 nmap <C-e> :CocCommand explorer<CR>
 nmap <C-p> :CocCommand<CR>
