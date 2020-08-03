@@ -81,9 +81,9 @@ nmap <C-p> :CocCommand<CR>
 nmap <C-j>d :call CocAction('jumpDefinition')<CR>
 nmap <C-j>r :call CocAction('jumpReferences')<CR>
 
-nmap <C-c> <leader>c<space>
+nmap <C-_> <leader>c<space>
 
-vmap <C-c> <leader>c<space>gv
+vmap <C-_> <leader>c<space>gv
 vmap > >gv
 vmap < <gv
 
