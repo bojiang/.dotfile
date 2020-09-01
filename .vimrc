@@ -23,7 +23,10 @@ set nowrap
 set nobackup " 不创建备份文件
 set noswapfile " 不创建交换文件
 set colorcolumn=88,120
+
+autocmd BufWritePre *.py :call CocAction('runCommand', 'editor.action.organizeImport')
 autocmd BufWritePre *.py,*.json :silent! %s#\($\n\s*\)\+\%$##  " remove tail new line
+
 set belloff=all
 
 function SuW()
