@@ -24,8 +24,18 @@ set nobackup " 不创建备份文件
 set noswapfile " 不创建交换文件
 set colorcolumn=88,120
 
-autocmd BufWritePre *.py :call CocAction('runCommand', 'editor.action.organizeImport')
-autocmd BufWritePre *.py,*.json :silent! %s#\($\n\s*\)\+\%$##  " remove tail new line
+
+function FormatPy()
+	mark `
+	:noa w
+	:call CocAction('runCommand', 'editor.action.organizeImport')
+	exe 'sleep 1'
+	:noa w
+	:call CocAction('format')
+	:silent! %s#\($\n\s*\)\+\%$##  " remove tail new line
+endfunction
+autocmd BufWritePre *.py exec FormatPy()
+autocmd BufWritePost *.py silent! normal! ``
 
 set belloff=all
 
