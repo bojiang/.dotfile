@@ -26,7 +26,7 @@ set colorcolumn=88,120
 
 
 function FormatPy()
-	mark `
+	:let g:winview = winsaveview()
 	:noa w
 	:call CocAction('runCommand', 'editor.action.organizeImport')
 	exe 'sleep 1'
@@ -35,7 +35,7 @@ function FormatPy()
 	:silent! %s#\($\n\s*\)\+\%$##  " remove tail new line
 endfunction
 autocmd BufWritePre *.py exec FormatPy()
-autocmd BufWritePost *.py silent! normal! ``
+autocmd BufWritePost *.py :call winrestview(g:winview)
 
 set belloff=all
 
