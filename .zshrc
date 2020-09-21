@@ -124,3 +124,9 @@ if [ -f $HOME/.dotfile/custom/zshrc ]; then
 	source $HOME/.dotfile/custom/zshrc
 fi
 
+# more completion
+if [ $commands[gh] ]; then
+	source <(gh completion --shell zsh)
+	compdef _gh gh
+	#compdump
+fi
