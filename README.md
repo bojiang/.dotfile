@@ -24,6 +24,12 @@ Featured:
 * nodejs
 * [nerd fonts](https://github.com/ryanoasis/nerd-fonts) installed in your terminal simulator
 
+for python dev:
+
+* isort >= 5.0.0
+* black
+* pylint
+
 ### init
 
 ``` shell

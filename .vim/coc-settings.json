@@ -7,7 +7,7 @@
   "signature.target": "echo",
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
-  "python.sortImports.args": ["-m 3", "-tc", "--force-grid-wrap=0", "--use-parentheses"],
+  "python.sortImports.args": ["-m3", "--tc", "--force-grid-wrap=0", "--use-parentheses", "--line-length 88", "--ensure-newline-before-comments"],
   "json.format.enable": true,
   "explorer.file.showHiddenFiles": true,
   "explorer.file.tabCD": false,
