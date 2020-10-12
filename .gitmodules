@@ -52,3 +52,6 @@
 [submodule "tool/docker-clean"]
 	path = tool/docker-clean
 	url = https://github.com/ZZROTDesign/docker-clean.git
+[submodule ".tmux/plugins/tmux-yank"]
+	path = .tmux/plugins/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank
