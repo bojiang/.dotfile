@@ -115,7 +115,7 @@ alias gp="git push origin HEAD"
 
 OMZ_PROMPT="$PROMPT"
 # shell
-PROMPT='$USER $([ -d .git ] && echo "git:"$(git config user.name)"("$(git rev-parse --abbrev-ref HEAD)") ")'"${OMZ_PROMPT}"
+PROMPT='$USER $([ -d .git ] && echo "git:"$(git config user.name)"("$(git rev-parse --abbrev-ref HEAD 2>/dev/null)") ")'"${OMZ_PROMPT}"
 alias di="echo -ne '\007'"
 
 # dotfile
