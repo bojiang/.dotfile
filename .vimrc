@@ -73,17 +73,19 @@ nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
 
-nmap <C-g> :Ag -w <cword><CR>
+nmap <C-n> :cn<CR>
+nmap <C-p> :cp<CR>
+
+nmap <C-g> :Ag! -w <cword><CR>
 nmap <C-f> :CocList files<CR>
 nmap <C-e> :CocCommand explorer<CR>
-nmap <C-p> :CocCommand<CR>
+nmap <C-\> :CocCommand<CR>
 
 nmap <C-j>d :call CocAction('jumpDefinition')<CR>
 nmap <C-j>r :call CocAction('jumpReferences')<CR>
 
-nmap <C-_> <leader>c<space>
-
-vmap <C-_> <leader>c<space>gv
+nmap <C-x><C-x> <plug>NERDCommenterToggle
+vmap <C-x> <plug>NERDCommenterToggle gv
 vmap > >gv
 vmap < <gv
 
