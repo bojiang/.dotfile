@@ -13,18 +13,26 @@ colorscheme codedark
 set background=dark
 set encoding=UTF-8
 set nocompatible
+set belloff=all
 set hlsearch " 高亮搜索
 set undofile " 保留撤销历史
 set undodir=$HOME/.cache/vimundo " 历史文件不要保存在项目目录
-set number
-set relativenumber
+set number " 当前行号
+set relativenumber " 相对行号
 set cursorline
 set nowrap
 set nobackup " 不创建备份文件
 set noswapfile " 不创建交换文件
 set colorcolumn=88,120
 
+" yank to/put from system clipboard
+if has('unnamedplus')
+	set clipboard=unnamedplus " Linux with X11
+else
+	set clipboard=unnamed " others
+endif
 
+" format python buffer on save
 function FormatPy()
 	:let g:winview = winsaveview()
 	:noa w
@@ -37,15 +45,15 @@ endfunction
 autocmd BufWritePre *.py exec FormatPy()
 autocmd BufWritePost *.py :call winrestview(g:winview)
 
-set belloff=all
-
-function SuW()
+" write buffer to file by su
+function SuWrite()
 	:w !sudo tee % > /dev/null
 	:edit!
 	call feedkeys("<CR>")
 endfunction
-cmap w!! exec SuW()
+cmap w!! exec SuWrite()
 
+" start page
 let g:startify_lists = [
         \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
         \ { 'type': 'files',     'header': ['   MRU']            },
@@ -55,7 +63,6 @@ let g:startify_lists = [
 let g:startify_change_to_dir = 0
 
 let g:indent_guides_enable_on_vim_startup = 1
-"let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
