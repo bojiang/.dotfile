@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'rking/ag.vim'
+"Plug 'rking/ag.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'mhinz/vim-startify'  " 最近打开文件
 Plug 'preservim/nerdcommenter'  " 快速注释
@@ -83,8 +83,10 @@ nmap <C-l> <C-w>l
 nmap <C-n> :cn<CR>
 nmap <C-p> :cp<CR>
 
-nmap <C-g> :Ag! -w <cword><CR>
+"nmap <C-g> :Ag! -w <cword><CR>
+nnoremap <silent> <C-g> :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
 nmap <C-f> :CocList files<CR>
+nmap <C-m> :CocList mru<CR>
 nmap <C-e> :CocCommand explorer<CR>
 nmap <C-\> :CocCommand<CR>
 

@@ -22,6 +22,7 @@ Featured:
 * tmux >= 3.0a
 * vim >= 8
 * nodejs
+* [rg](https://command-not-found.com/rg)
 * [nerd fonts](https://github.com/ryanoasis/nerd-fonts) installed in your terminal simulator
 
 for python dev:
