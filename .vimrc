@@ -34,6 +34,7 @@ endif
 
 " format python buffer on save
 function FormatPy()
+	:let clipboard_save = &clipboard
 	:let g:winview = winsaveview()
 	:noa w
 	:call CocAction('runCommand', 'editor.action.organizeImport')
@@ -41,6 +42,7 @@ function FormatPy()
 	:noa w
 	:call CocAction('format')
 	:silent! %s#\($\n\s*\)\+\%$##  " remove tail new line
+	:let &clipboard = clipboard_save
 endfunction
 autocmd BufWritePre *.py exec FormatPy()
 autocmd BufWritePost *.py :call winrestview(g:winview)
@@ -80,10 +82,11 @@ nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
 
-nmap <C-n> :cn<CR>
-nmap <C-p> :cp<CR>
+nmap <C-n> :CocNext<CR>
+nmap <C-p> :CocPrev<CR>
 
 "nmap <C-g> :Ag! -w <cword><CR>
+nnoremap <silent> <C-G> :exe 'CocList -I --input='.expand('<cword>').' grep -w'<CR>
 nnoremap <silent> <C-g> :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
 nmap <C-f> :CocList files<CR>
 nmap <C-m> :CocList mru<CR>
