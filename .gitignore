@@ -5,6 +5,4 @@ custom/
 .vim/sessions/
 .vim/.netrwhist
 .config/coc/*
-!.config/coc/extensions
-.config/coc/extensions/*
 .git/

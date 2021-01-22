@@ -25,6 +25,8 @@ set nobackup " 不创建备份文件
 set noswapfile " 不创建交换文件
 set colorcolumn=88,120
 
+let g:coc_global_extensions = ["coc-explorer", "coc-git", "coc-highlight", "coc-html", "coc-json", "coc-lists", "coc-prettier", "coc-python", "coc-rls", "coc-rust-analyzer", "coc-snippets", "coc-tabnine"]
+
 " yank to/put from system clipboard
 if has('unnamedplus')
 	set clipboard=unnamedplus " Linux with X11

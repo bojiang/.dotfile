@@ -4,7 +4,7 @@ cd $HOME/.dotfile
 git pull origin master --rebase
 git submodule init
 git submodule update
-cd $HOME/.dotfile/.config/coc/extensions
-npm install
+#cd $HOME/.dotfile/.config/coc/extensions
+#npm install
 cd $_PWD
-
+vim +CocUpdateSync +qall  # update coc plugins
