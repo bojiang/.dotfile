@@ -1,6 +1,5 @@
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'rking/ag.vim'
 Plug 'farmergreg/vim-lastplace'
 Plug 'mhinz/vim-startify'  " 最近打开文件
 Plug 'preservim/nerdcommenter'  " 快速注释
@@ -19,13 +18,12 @@ set undofile " 保留撤销历史
 set undodir=$HOME/.cache/vimundo " 历史文件不要保存在项目目录
 set number " 当前行号
 set relativenumber " 相对行号
-set cursorline
+set cursorline " 高亮光标所在行
 set nowrap
 set nobackup " 不创建备份文件
 set noswapfile " 不创建交换文件
-set colorcolumn=88,120
-
-let g:coc_global_extensions = ["coc-explorer", "coc-git", "coc-highlight", "coc-html", "coc-json", "coc-lists", "coc-prettier", "coc-python", "coc-rls", "coc-rust-analyzer", "coc-snippets", "coc-tabnine"]
+set colorcolumn=88,120 " 代码宽度标尺
+set timeoutlen=200 " 连击等待时间200ms
 
 " yank to/put from system clipboard
 if has('unnamedplus')
@@ -33,6 +31,12 @@ if has('unnamedplus')
 else
 	set clipboard=unnamed " others
 endif
+
+" coc.nvim extensions
+let g:coc_global_extensions = [
+	\ "coc-explorer", "coc-git", "coc-highlight", "coc-html", "coc-json",
+	\ "coc-lists", "coc-prettier", "coc-python", "coc-rls", "coc-rust-analyzer",
+	\ "coc-snippets", "coc-tabnine"]
 
 " format python buffer on save
 function FormatPy()
@@ -66,14 +70,13 @@ let g:startify_lists = [
         \ ]
 let g:startify_change_to_dir = 0
 
+" colors indents like a zebra
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=234
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=235
 
 "key map
-let mapleader = ","
-
 imap <C-j> <down>
 imap <C-k> <up>
 imap <C-h> <left>
@@ -87,11 +90,12 @@ nmap <C-l> <C-w>l
 nmap <C-n> :CocNext<CR>
 nmap <C-p> :CocPrev<CR>
 
-"nmap <C-g> :Ag! -w <cword><CR>
-nnoremap <silent> <C-G> :exe 'CocList -I --input='.expand('<cword>').' grep -w'<CR>
-nnoremap <silent> <C-g> :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
-nmap <C-f> :CocList files<CR>
-nmap <C-m> :CocList mru<CR>
+nnoremap <silent> <C-g> :exe 'CocList -I --input='.expand('<cword>').' grep -w'<CR>
+nnoremap <silent> <C-g><C-g> :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
+
+nmap <C-f> :CocList mru<CR>
+nmap <C-f><C-f> :CocList files<CR>
+
 nmap <C-e> :CocCommand explorer<CR>
 nmap <C-\> :CocCommand<CR>
 
