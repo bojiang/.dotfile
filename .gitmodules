@@ -55,3 +55,6 @@
 [submodule ".tmux/plugins/tmux-yank"]
 	path = .tmux/plugins/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
+[submodule ".vim/plugged/vim-paste-easy"]
+	path = .vim/plugged/vim-paste-easy
+	url = https://github.com/roxma/vim-paste-easy.git

@@ -6,6 +6,7 @@ Plug 'preservim/nerdcommenter'  " 快速注释
 Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮显示
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tomasiser/vim-code-dark' " 主题
+Plug 'roxma/vim-paste-easy' " set paste mode automatically
 call plug#end()
 
 colorscheme codedark
