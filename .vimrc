@@ -36,7 +36,7 @@ endif
 let g:coc_global_extensions = [
 	\ "coc-explorer", "coc-git", "coc-highlight", "coc-html", "coc-json",
 	\ "coc-lists", "coc-prettier", "coc-python", "coc-rls", "coc-rust-analyzer",
-	\ "coc-snippets", "coc-tabnine"]
+	\ "coc-snippets", "coc-tabnine", "coc-yaml"]
 
 " format python buffer on save
 function FormatPy()

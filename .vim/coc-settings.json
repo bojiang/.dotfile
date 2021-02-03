@@ -22,6 +22,9 @@
   "explorer.keyMappings.global": {
     "<cr>": ["expandable?", "expand", "open"]
   },
+  "yaml.schemas": {
+    "kubernetes": "/*.yaml"
+  },
   "explorer.icon.enableNerdfont": true,
   "list.source.grep.command": "rg",
   "list.source.files.args": ["--hidden", "--files"],
