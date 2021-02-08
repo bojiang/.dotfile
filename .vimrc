@@ -24,7 +24,9 @@ set nowrap
 set nobackup " 不创建备份文件
 set noswapfile " 不创建交换文件
 set colorcolumn=88,120 " 代码宽度标尺
-set timeoutlen=200 " 连击等待时间200ms
+set timeoutlen=350 " 连击等待时间200ms
+
+let cwd = getcwd()
 
 " yank to/put from system clipboard
 if has('unnamedplus')
