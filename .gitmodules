@@ -13,9 +13,6 @@
 [submodule ".vim/plugged/vim-code-dark"]
 	path = .vim/plugged/vim-code-dark
 	url = https://github.com/tomasiser/vim-code-dark.git
-[submodule ".vim/plugged/vim-startify"]
-	path = .vim/plugged/vim-startify
-	url = https://github.com/mhinz/vim-startify.git
 [submodule ".vim/plugged/vim-devicons"]
 	path = .vim/plugged/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git

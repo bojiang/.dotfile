@@ -1,7 +1,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'farmergreg/vim-lastplace'
-Plug 'mhinz/vim-startify'  " 最近打开文件
 Plug 'preservim/nerdcommenter'  " 快速注释
 Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮显示
 Plug 'ryanoasis/vim-devicons' " icons
@@ -63,15 +62,6 @@ function SuWrite()
 	call feedkeys("<CR>")
 endfunction
 cmap w!! exec SuWrite()
-
-" start page
-let g:startify_lists = [
-        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-        \ { 'type': 'files',     'header': ['   MRU']            },
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-        \ ]
-let g:startify_change_to_dir = 0
 
 " colors indents like a zebra
 let g:indent_guides_enable_on_vim_startup = 1
