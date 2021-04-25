@@ -4,9 +4,6 @@
 [submodule ".vim/plugged/nerdcommenter"]
 	path = .vim/plugged/nerdcommenter
 	url = https://github.com/preservim/nerdcommenter.git
-[submodule ".vim/plugged/ag.vim"]
-	path = .vim/plugged/ag.vim
-	url = https://github.com/rking/ag.vim.git
 [submodule ".vim/plugged/coc.nvim"]
 	path = .vim/plugged/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
@@ -25,12 +22,6 @@
 [submodule ".tmux/plugins/tmux-net-speed"]
 	path = .tmux/plugins/tmux-net-speed
 	url = https://git::@github.com/tmux-plugins/tmux-net-speed
-[submodule ".tmux/plugins/tmux-resurrect"]
-	path = .tmux/plugins/tmux-resurrect
-	url = https://git::@github.com/tmux-plugins/tmux-resurrect
-[submodule ".tmux/plugins/tmux-continuum"]
-	path = .tmux/plugins/tmux-continuum
-	url = https://git::@github.com/tmux-plugins/tmux-continuum
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
