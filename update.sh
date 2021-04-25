@@ -7,4 +7,4 @@ git submodule update
 #cd $HOME/.dotfile/.config/coc/extensions
 #npm install
 cd $_PWD
-vim +CocUpdateSync +qall  # update coc plugins
+vim -c 'CocUpdateSync|q'  # update coc plugins
