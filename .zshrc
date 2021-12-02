@@ -62,7 +62,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl docker zsh-interactive-cd systemd)
+plugins=(fzf git kubectl docker zsh-interactive-cd systemd)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,7 +115,8 @@ alias gp="git push origin HEAD"
 
 OMZ_PROMPT="$PROMPT"
 # shell
-PROMPT='$USER $([ -d .git ] && echo "git:"$(git config user.name)"("$(git rev-parse --abbrev-ref HEAD 2>/dev/null)") ")'"${OMZ_PROMPT}"
+# PROMPT='$USER $([ -d .git ] && echo "git:"$(git config user.name)"("$(git rev-parse --abbrev-ref HEAD 2>/dev/null)") ")'"${OMZ_PROMPT}"
+PROMPT='$([ -d .git ] && echo " "$(git config user.name)" ")'"${OMZ_PROMPT}"
 alias di="echo -ne '\007'"
 
 # dotfile

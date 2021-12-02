@@ -6,6 +6,8 @@ Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮显示
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tomasiser/vim-code-dark' " 主题
 Plug 'roxma/vim-paste-easy' " set paste mode automatically
+Plug 'ActivityWatch/aw-watcher-vim' " 活动记录
+
 call plug#end()
 
 colorscheme codedark
@@ -100,3 +102,13 @@ vmap <C-x> <plug>NERDCommenterToggle gv
 vmap > >gv
 vmap < <gv
 
+" Use space to show documentation in preview window
+nnoremap <silent> <space> :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
