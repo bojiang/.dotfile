@@ -135,7 +135,7 @@ alias gp='function _blah(){
 		return
 	fi
 
-	if [[ -z $1 ]]
+	if [[ -z $1 ]] || [[ $1 == "-"* ]]
 	then
 		echo "git push origin HEAD $@"
 		git push origin HEAD $@
@@ -176,7 +176,7 @@ alias gr='function _blah(){
 		return
 	fi
 
-	if [[ -z $1 ]]
+	if [[ -z $1 ]] || [[ $1 == "-"* ]]
 	then
 		echo "git pull upstream master --rebase $@"
 		git pull upstream master --rebase $@
