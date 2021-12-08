@@ -100,7 +100,23 @@ alias dclean="docker-clean images"
 alias dlog="docker logs "
 
 # git & github
-alias gu='function _blah(){ git config user.name "$1"; git config user.email "$2"; git config user.signkey "$2"; echo "you are $1($2) now" };_blah'
+alias gu='function _blah(){
+	git config user.name "$1"
+	git config user.email "$2"
+
+	KEYS=$(gpg --list-keys)
+	echo $KEYS
+
+	if [[ $? == 0 ]] && [[ $KEYS =~ .*$2.* ]]
+	then
+		git config user.signkey "$2"
+		git config commit.gpgsign true
+		echo "you are $1($2) now [with key]"
+	else
+		echo "you are $1($2) now"
+	fi
+};_blah'
+
 alias gs="git --no-pager branch;git --no-pager log --decorate=short --pretty=oneline -n 5;git status"
 alias gc="git commit --all -v"
 alias gca="git commit --all --amend -v"
