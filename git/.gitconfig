@@ -12,3 +12,5 @@
 	helper = cache --timeout=86400
 [oh-my-zsh]
 	hide-status = 1
+[commit]
+	gpgSign = true
