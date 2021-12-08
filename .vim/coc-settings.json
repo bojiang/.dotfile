@@ -2,7 +2,6 @@
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "black",
   "hover.target": "float",
-  "python.formatting.blackArgs": ["--skip-string-normalization"],
   "coc.preferences.formatOnSaveFiletypes": ["json"],
   "signature.target": "float",
   "python.linting.pylintEnabled": true,
@@ -10,14 +9,6 @@
   "python.linting.pylintArgs": ["--disable=not-context-manager"],
   "pyright.organizeimports.provider": "isort",
   "python.linting.mypyEnabled": false,
-  "python.sortImports.args": [
-    "-m3",
-    "--tc",
-    "--force-grid-wrap=0",
-    "--use-parentheses",
-    "-l88",
-    "--ensure-newline-before-comments"
-  ],
   "json.format.enable": true,
   "explorer.file.showHiddenFiles": true,
   "explorer.keyMappings.global": {

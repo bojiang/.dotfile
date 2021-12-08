@@ -100,18 +100,93 @@ alias dclean="docker-clean images"
 alias dlog="docker logs "
 
 # git & github
-alias gu='function _blah(){ git config user.name "$1"; git config user.email "$2"; echo "you are $1($2) now" };_blah'
+alias gu='function _blah(){ git config user.name "$1"; git config user.email "$2"; git config user.signkey "$2"; echo "you are $1($2) now" };_blah'
 alias gs="git --no-pager branch;git --no-pager log --decorate=short --pretty=oneline -n 5;git status"
 alias gc="git commit --all -v"
 alias gca="git commit --all --amend -v"
 alias gck="git checkout "
 alias gcap="gca --no-edit;gp"
-alias gr="git pull upstream master --rebase"
-alias gro="git pull origin master --rebase"
+alias gbcl="git branch --merged | xargs git branch -d"
+
+alias gp='function _blah(){
+	ORIGIN="$(git remote get-url origin)"
+	if [[ $ORIGIN =~ "((git@[A-z0-9\-\.]+:)|(https?:\/\/[A-z0-9\-\.]+\/))([A-z0-9\-]+)\/([A-z0-9\-\.]+\.git)" ]]
+	then
+		SERVER=$match[1]
+		NAMESPACE=$match[4]
+		REPO=$match[5]
+	else
+		return
+	fi
+
+	if [[ -z $1 ]]
+	then
+		echo "git push origin HEAD $@"
+		git push origin HEAD $@
+	elif [[ $1 != "-"* ]] && ( [[ -z $2 ]] || [[ $2 == "-"* ]])
+	then
+		IFS=":" read -r REMOTE BRANCH <<< "$1"
+		shift
+		if [[ -z $BRANCH ]]
+		then
+			BRANCH=$REMOTE
+			echo "git push origin HEAD:$BRANCH $@"
+			git push origin HEAD:$BRANCH $@
+		else
+			if git remote get-url $REMOTE > /dev/null 2>&1
+			then
+				echo "git push $REMOTE HEAD:$BRANCH $@"
+				git push $REMOTE HEAD:$BRANCH $@
+			else
+				echo "git push $SERVER$REMOTE/$REPO HEAD:$BRANCH $@"
+				git push $SERVER$REMOTE/$REPO HEAD:$BRANCH $@
+			fi
+		fi
+	else
+		echo "usage: gp [remote:]branch --options"
+	fi
+};_blah'
+
 alias grc="git rebase --continue"
 alias gra="git rebase --abort"
-alias gbcl="git branch --merged | xargs git branch -d"
-alias gp="git push origin HEAD"
+alias gr='function _blah(){
+	ORIGIN="$(git remote get-url origin)"
+	if [[ $ORIGIN =~ "((git@[A-z0-9\-\.]+:)|(https?:\/\/[A-z0-9\-\.]+\/))([A-z0-9\-]+)\/([A-z0-9\-\.]+\.git)" ]]
+	then
+		SERVER=$match[1]
+		NAMESPACE=$match[4]
+		REPO=$match[5]
+	else
+		return
+	fi
+
+	if [[ -z $1 ]]
+	then
+		echo "git pull upstream master --rebase $@"
+		git pull upstream master --rebase $@
+	elif [[ $1 != "-"* ]] && ( [[ -z $2 ]] || [[ $2 == "-"* ]])
+	then
+		IFS=":" read -r REMOTE BRANCH <<< "$1"
+		shift
+		if [[ -z $BRANCH ]]
+		then
+			BRANCH=$REMOTE
+			echo "git pull upstream $BRANCH --rebase $@"
+			git pull upstream $BRANCH --rebase $@
+		else
+			if git remote get-url $REMOTE > /dev/null 2>&1
+			then
+				echo "git pull $REMOTE $BRANCH --rebase $@"
+				git pull $REMOTE $BRANCH --rebase $@
+			else
+				echo "git pull $SERVER$REMOTE/$REPO $BRANCH --rebase $@"
+				git pull $SERVER$REMOTE/$REPO $BRANCH --rebase $@
+			fi
+		fi
+	else
+		echo "usage gr [remote:]branch --options"
+	fi
+};_blah'
 
 OMZ_PROMPT="$PROMPT"
 # shell
