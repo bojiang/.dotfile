@@ -85,6 +85,12 @@ nmap <C-l> <C-w>l
 nmap <C-n> :CocNext<CR>
 nmap <C-p> :CocPrev<CR>
 
+function ApplyThenWrite()
+	call feedkeys(".")
+	:noa w
+endfunction
+nmap <C-s> :call ApplyThenWrite()<CR>
+
 nnoremap <silent> <C-g> :exe 'CocList -I --input='.expand('<cword>').' grep -w'<CR>
 nnoremap <silent> <C-g><C-g> :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
 
