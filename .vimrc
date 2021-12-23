@@ -43,19 +43,22 @@ let g:coc_global_extensions = [
 	\ "coc-snippets", "coc-tabnine", "coc-yaml"]
 
 " format python buffer on save
-function FormatPy()
+function FormatPy(time)
 	:let clipboard_save = &clipboard
-	:let g:winview = winsaveview()
+	":let g:winview = winsaveview()
 	:noa w
 	:call CocAction('runCommand', 'editor.action.organizeImport')
-	exe 'sleep 1'
+	"exe 'sleep 1'
 	:noa w
 	:call CocAction('format')
 	:silent! %s#\($\n\s*\)\+\%$##  " remove tail new line
 	:let &clipboard = clipboard_save
+	":call winrestview(g:winview)
+	:noa w
 endfunction
-autocmd BufWritePre *.py exec FormatPy()
-autocmd BufWritePost *.py :call winrestview(g:winview)
+
+autocmd BufWritePre *.py :call timer_start(1, function('FormatPy', []))
+"autocmd BufWritePost *.py :call winrestview(g:winview)
 
 " write buffer to file by su
 function SuWrite()
