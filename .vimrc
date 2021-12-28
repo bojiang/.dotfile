@@ -39,7 +39,7 @@ endif
 " coc.nvim extensions
 let g:coc_global_extensions = [
 	\ "coc-explorer", "coc-git", "coc-highlight", "coc-html", "coc-json",
-	\ "coc-lists", "coc-prettier", "coc-pyright", "coc-rls", "coc-rust-analyzer",
+	\ "coc-lists", "coc-pyright", "coc-rls", "coc-rust-analyzer",
 	\ "coc-snippets", "coc-tabnine", "coc-yaml"]
 
 " format python buffer on save
