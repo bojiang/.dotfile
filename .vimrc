@@ -9,6 +9,8 @@ Plug 'roxma/vim-paste-easy' " set paste mode automatically
 "Plug 'ActivityWatch/aw-watcher-vim' " 活动记录
 Plug 'github/copilot.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'wellle/targets.vim'
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
