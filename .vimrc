@@ -6,7 +6,8 @@ Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮显示
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tomasiser/vim-code-dark' " 主题
 Plug 'roxma/vim-paste-easy' " set paste mode automatically
-Plug 'ActivityWatch/aw-watcher-vim' " 活动记录
+"Plug 'ActivityWatch/aw-watcher-vim' " 活动记录
+Plug 'github/copilot.vim'
 
 call plug#end()
 
@@ -40,7 +41,8 @@ endif
 let g:coc_global_extensions = [
 	\ "coc-explorer", "coc-git", "coc-highlight", "coc-html", "coc-json",
 	\ "coc-lists", "coc-pyright", "coc-rls", "coc-rust-analyzer",
-	\ "coc-snippets", "coc-tabnine", "coc-yaml"]
+	\ "coc-snippets", "coc-tabnine"]
+	" \ coc-yaml]
 
 " format python buffer on save
 function FormatPy(time)
