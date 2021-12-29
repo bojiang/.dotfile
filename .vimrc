@@ -90,7 +90,7 @@ nmap <C-p> :CocPrev<CR>
 
 function ApplyThenWrite()
 	call feedkeys(".")
-	:noa w
+	call timer_start(20, function("FormatPy", []))
 endfunction
 nmap <C-s> :call ApplyThenWrite()<CR>
 
