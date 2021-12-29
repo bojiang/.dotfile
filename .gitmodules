@@ -46,3 +46,6 @@
 [submodule ".vim/plugged/vim-paste-easy"]
 	path = .vim/plugged/vim-paste-easy
 	url = https://github.com/roxma/vim-paste-easy.git
+[submodule ".vim/plugged/vim-easymotion"]
+	path = .vim/plugged/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion.git
