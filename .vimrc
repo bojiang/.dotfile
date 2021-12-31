@@ -11,10 +11,19 @@ Plug 'github/copilot.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"Plug 'junegunn/fzf.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 
 call plug#end()
 
 colorscheme codedark
+let g:airline_theme = 'codedark'
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 set background=dark
 set encoding=UTF-8
 set nocompatible

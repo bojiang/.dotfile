@@ -55,3 +55,18 @@
 [submodule ".vim/plugged/vim-surround"]
 	path = .vim/plugged/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/plugged/fzf.vim"]
+	path = .vim/plugged/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule ".vim/plugged/vim-airline-themes"]
+	path = .vim/plugged/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule ".vim/plugged/coc-fzf"]
+	path = .vim/plugged/coc-fzf
+	url = https://github.com/antoinemadec/coc-fzf.git
+[submodule ".vim/plugged/vim-airline"]
+	path = .vim/plugged/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule ".vim/plugged/vim-commentary"]
+	path = .vim/plugged/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
