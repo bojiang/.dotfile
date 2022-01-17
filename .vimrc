@@ -116,6 +116,7 @@ nmap <C-f><C-f> :CocList files<CR>
 
 nmap <C-e> :CocCommand explorer<CR>
 nmap <C-\> :CocCommand<CR>
+nmap <C-r> <Plug>(coc-rename)
 
 nmap <C-j>d :call CocAction('jumpDefinition')<CR>
 nmap <C-j>r :call CocAction('jumpReferences')<CR>

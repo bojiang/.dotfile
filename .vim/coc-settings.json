@@ -1,55 +1,67 @@
 {
-  "python.formatting.provider": "black",
-  "python.formatting.blackPath": "black",
-  "hover.target": "float",
-  "coc.preferences.formatOnSaveFiletypes": ["json"],
-  "signature.target": "float",
-  "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true,
-  "python.linting.pylintArgs": ["--disable=not-context-manager"],
-  "pyright.organizeimports.provider": "isort",
-  "python.linting.mypyEnabled": false,
-  "json.format.enable": true,
-  "explorer.file.showHiddenFiles": true,
-  "explorer.keyMappings.global": {
-    "<cr>": ["expandable?", "expand", "open"]
-  },
-  "yaml.schemas": {
-    "kubernetes": "/*.yaml"
-  },
-  "explorer.icon.enableNerdfont": true,
-  "list.source.grep.command": "rg",
-  "list.source.files.args": ["--hidden", "--files"],
-  "cSpell.userWords": [
-    "",
-    "aiohttp",
-    "asyncio",
-    "atalaya",
-    "bento",
-    "bentoml",
-    "cors",
-    "datas",
-    "enable",
-    "fetch",
-    "functool",
-    "getrlimit",
-    "gunicorn",
-    "hdrs",
-    "input",
-    "itertools",
-    "mypy",
-    "nerdfont",
-    "nofile",
-    "psutil",
-    "pylint",
-    "pytestconfig",
-    "reqs",
-    "rlimit",
-    "s",
-    "sema",
-    "skipif",
-    "timeit",
-    "webp"
-  ],
-  "list.interactiveDebounceTime": 300
+	"python.formatting.provider": "black",
+	"python.formatting.blackPath": "black",
+	"hover.target": "float",
+	"coc.preferences.formatOnSaveFiletypes": [
+		"json"
+	],
+	"signature.target": "float",
+	"python.linting.pylintEnabled": true,
+	"python.linting.flake8Enabled": false,
+	"python.linting.enabled": true,
+	"python.linting.pylintArgs": [
+		"--disable=not-context-manager"
+	],
+	"pyright.organizeimports.provider": "isort",
+	"python.linting.mypyEnabled": false,
+	"json.format.enable": true,
+	"explorer.file.showHiddenFiles": true,
+	"explorer.keyMappings.global": {
+		"<cr>": [
+			"expandable?",
+			"expand",
+			"open"
+		]
+	},
+	"yaml.schemas": {
+		"kubernetes": "/*.yaml"
+	},
+	"explorer.icon.enableNerdfont": true,
+	"list.source.grep.command": "rg",
+	"list.source.files.args": [
+		"--hidden",
+		"--files"
+	],
+	"cSpell.userWords": [
+		"",
+		"aiohttp",
+		"asyncio",
+		"atalaya",
+		"bento",
+		"bentoml",
+		"cors",
+		"datas",
+		"enable",
+		"fetch",
+		"functool",
+		"getrlimit",
+		"gunicorn",
+		"hdrs",
+		"input",
+		"itertools",
+		"mypy",
+		"nerdfont",
+		"nofile",
+		"psutil",
+		"pylint",
+		"pytestconfig",
+		"reqs",
+		"rlimit",
+		"s",
+		"sema",
+		"skipif",
+		"timeit",
+		"webp"
+	],
+	"list.interactiveDebounceTime": 300
 }
