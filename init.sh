@@ -24,7 +24,7 @@ mkdir -p $HOME/.cache/vimundo
 mkdir -p $HOME/.config
 mkdir -p $HOME/.local/bin
 
-targets=".oh-my-zsh .zshrc .vim .vimrc .vimrc.before.local .config/coc .tmux .tmux.conf .profile .local/bin/docker-clean"
+targets=".oh-my-zsh .zshrc .vim .vimrc .vimrc.before.local .config/coc .config/nvim .tmux .tmux.conf .profile .local/bin/docker-clean"
 
 for target in $targets; do
 	[ -e $HOME/$target -o -L $HOME/$target ] && mv $HOME/$target $BACKUP_DIR/$target
