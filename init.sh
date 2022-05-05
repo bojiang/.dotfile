@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 if [ ! -f $PWD/.dotfile_flag ] ; then
 	echo "please run init.sh from the .dotfile directory"
 	exit 1

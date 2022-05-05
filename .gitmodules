@@ -1,18 +1,6 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule ".vim/plugged/nerdcommenter"]
-	path = .vim/plugged/nerdcommenter
-	url = https://github.com/preservim/nerdcommenter.git
-[submodule ".vim/plugged/coc.nvim"]
-	path = .vim/plugged/coc.nvim
-	url = https://github.com/neoclide/coc.nvim.git
-[submodule ".vim/plugged/vim-code-dark"]
-	path = .vim/plugged/vim-code-dark
-	url = https://github.com/tomasiser/vim-code-dark.git
-[submodule ".vim/plugged/vim-devicons"]
-	path = .vim/plugged/vim-devicons
-	url = https://github.com/ryanoasis/vim-devicons.git
 [submodule ".tmux/plugins/tmux-sensible"]
 	path = .tmux/plugins/tmux-sensible
 	url = https://git::@github.com/tmux-plugins/tmux-sensible
@@ -31,42 +19,9 @@
 [submodule ".tmux/plugins/tmux-current-pane-hostname"]
 	path = .tmux/plugins/tmux-current-pane-hostname
 	url = https://git::@github.com/soyuka/tmux-current-pane-hostname
-[submodule ".vim/plugged/vim-lastplace"]
-	path = .vim/plugged/vim-lastplace
-	url = https://github.com/farmergreg/vim-lastplace.git
-[submodule ".vim/plugged/vim-indent-guides"]
-	path = .vim/plugged/vim-indent-guides
-	url = https://github.com/nathanaelkane/vim-indent-guides.git
 [submodule "tool/docker-clean"]
 	path = tool/docker-clean
 	url = https://github.com/ZZROTDesign/docker-clean.git
 [submodule ".tmux/plugins/tmux-yank"]
 	path = .tmux/plugins/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
-[submodule ".vim/plugged/vim-paste-easy"]
-	path = .vim/plugged/vim-paste-easy
-	url = https://github.com/roxma/vim-paste-easy.git
-[submodule ".vim/plugged/vim-easymotion"]
-	path = .vim/plugged/vim-easymotion
-	url = https://github.com/easymotion/vim-easymotion.git
-[submodule ".vim/plugged/targets.vim"]
-	path = .vim/plugged/targets.vim
-	url = https://github.com/wellle/targets.vim.git
-[submodule ".vim/plugged/vim-surround"]
-	path = .vim/plugged/vim-surround
-	url = https://github.com/tpope/vim-surround.git
-[submodule ".vim/plugged/fzf.vim"]
-	path = .vim/plugged/fzf.vim
-	url = https://github.com/junegunn/fzf.vim.git
-[submodule ".vim/plugged/vim-airline-themes"]
-	path = .vim/plugged/vim-airline-themes
-	url = https://github.com/vim-airline/vim-airline-themes.git
-[submodule ".vim/plugged/coc-fzf"]
-	path = .vim/plugged/coc-fzf
-	url = https://github.com/antoinemadec/coc-fzf.git
-[submodule ".vim/plugged/vim-airline"]
-	path = .vim/plugged/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
-[submodule ".vim/plugged/vim-commentary"]
-	path = .vim/plugged/vim-commentary
-	url = https://github.com/tpope/vim-commentary.git

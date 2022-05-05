@@ -3,6 +3,6 @@ backup/
 custom/
 .tmux/resurrect/
 .vim/sessions/
+.vim/plugged/
 .vim/.netrwhist
 .config/coc/*
-.git/

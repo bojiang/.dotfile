@@ -6,7 +6,6 @@ Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮显示
 Plug 'ryanoasis/vim-devicons' " icons
 Plug 'tomasiser/vim-code-dark' " 主题
 Plug 'roxma/vim-paste-easy' " set paste mode automatically
-"Plug 'ActivityWatch/aw-watcher-vim' " 活动记录
 Plug 'github/copilot.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
@@ -14,9 +13,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 
 call plug#end()
 
@@ -49,11 +45,6 @@ else
 	set clipboard=unnamed " others
 endif
 
-" coc.nvim extensions
-let g:coc_global_extensions = [
-	\ "coc-explorer", "coc-git", "coc-highlight", "coc-html", "coc-json",
-	\ "coc-lists", "coc-pyright", "coc-rls", "coc-rust-analyzer"]
-	" \ coc-yaml]
 
 " format python buffer on save
 function FormatPy(time)
@@ -115,7 +106,7 @@ nmap <C-f><C-f> :CocList files<CR>
 
 nmap <C-e> :CocCommand explorer<CR>
 nmap <C-\> :CocCommand<CR>
-nmap <C-r> <Plug>(coc-rename)
+"nmap <C-r> <Plug>(coc-rename)
 
 nmap <C-j>d :call CocAction('jumpDefinition')<CR>
 nmap <C-j>r :call CocAction('jumpReferences')<CR>
