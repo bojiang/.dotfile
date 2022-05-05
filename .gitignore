@@ -6,3 +6,4 @@ custom/
 .vim/plugged/
 .vim/.netrwhist
 .config/coc/*
+Dockerfile

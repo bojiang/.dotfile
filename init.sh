@@ -1,13 +1,14 @@
 #!/bin/bash
 set -e
-if [ ! -f $PWD/.dotfile_flag ] ; then
-	echo "please run init.sh from the .dotfile directory"
-	exit 1
-fi
+_PWD=$PWD
 
-if [ $PWD != $HOME/.dotfile ] ; then
-	echo "please make sure .dotfile is in your HOME directory"
-	exit 1
+if [ ! -f $PWD/.dotfile_flag ] ; then
+	if [ ! -f $HOME/.dotfile/.dotfile_flag ] ; then
+		echo "please make sure .dotfile is in your HOME directory"
+		exit 1
+	else
+		cd $HOME/.dotfile
+	fi
 fi
 
 if [[ $(tmux -V 2>&1 | grep -Po '(?<=tmux )(.+)') < "3.0a" ]] ; then
@@ -42,4 +43,12 @@ done
 ln -s $PWD/git/.gitignore $HOME/.gitignore
 ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 
-echo "done, don't forget to run ./update.sh if needed."
+git submodule init
+git submodule update
+
+nvim -c 'PlugInstall|qa!'
+nvim -c 'CocInstall -sync coc-explorer coc-git coc-highlight coc-json coc-lists coc-pyright coc-yaml|qa!'
+yarnpkg cache clean
+
+cd $_PWD
+echo "done"
