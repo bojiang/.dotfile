@@ -7,3 +7,5 @@ custom/
 .vim/.netrwhist
 .config/coc/*
 Dockerfile
+docker-compose.yml
+.gitignore
