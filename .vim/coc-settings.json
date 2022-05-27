@@ -63,5 +63,6 @@
 		"timeit",
 		"webp"
 	],
+	"git.addGBlameToVirtualText": true,
 	"list.interactiveDebounceTime": 300
 }

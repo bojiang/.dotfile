@@ -11,7 +11,7 @@ ADD --chown=$USER:sudo . /home/$USER/.dotfile/
 RUN sudo -u $USER /home/$USER/.dotfile/init.sh
 
 RUN apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
-gpg ssh wget
+gpg ssh wget tig htop
 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.11.0-Linux-x86_64.sh
 RUN chmod +x Miniconda3-py38_4.11.0-Linux-x86_64.sh && \
