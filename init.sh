@@ -23,6 +23,8 @@ mkdir -p $BACKUP_DIR/.config
 mkdir -p $BACKUP_DIR/.local/bin
 
 mkdir -p $HOME/.cache/vimundo
+mkdir -p $HOME/.cache/vimswp
+mkdir -p $HOME/.cache/vimbackup
 mkdir -p $HOME/.config
 mkdir -p $HOME/.local/bin
 

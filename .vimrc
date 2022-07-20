@@ -27,12 +27,12 @@ set belloff=all
 set hlsearch " 高亮搜索
 set undofile " 保留撤销历史
 set undodir=$HOME/.cache/vimundo " 历史文件不要保存在项目目录
+set directory=$HOME/.cache/vimswp " 交换文件不要保存在项目目录
+set backupdir=$HOME/.cache/vimbackup " 备份文件不要保存在项目目录
 set number " 当前行号
 set relativenumber " 相对行号
 set cursorline " 高亮光标所在行
 set nowrap
-set nobackup " 不创建备份文件
-set noswapfile " 不创建交换文件
 set colorcolumn=88,120 " 代码宽度标尺
 set timeoutlen=350 " 连击等待时间200ms
 
