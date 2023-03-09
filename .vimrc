@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'farmergreg/vim-lastplace'
 Plug 'preservim/nerdcommenter'  " 快速注释
@@ -13,6 +14,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'anosillus/vim-ipynb'
 
 call plug#end()
 
@@ -45,6 +47,11 @@ else
 	set clipboard=unnamed " others
 endif
 
+
+"
+let g:copilot_filetypes = {
+	\ 'markdown': v:true,
+	\ }
 
 " format python buffer on save
 function FormatPy(time)
@@ -110,6 +117,8 @@ nmap <C-\> :CocCommand<CR>
 
 nmap <C-j>d :call CocAction('jumpDefinition')<CR>
 nmap <C-j>r :call CocAction('jumpReferences')<CR>
+
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 nmap <C-x><C-x> <plug>NERDCommenterToggle
 vmap <C-x> <plug>NERDCommenterToggle gv

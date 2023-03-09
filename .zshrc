@@ -125,12 +125,13 @@ alias gbcl="git branch --merged | xargs git branch -d"
 
 alias gp='function _blah(){
 	ORIGIN="$(git remote get-url origin)"
-	if [[ $ORIGIN =~ "((git@[a-Z0-9\-\.]+:)|(https?:\/\/[a-Z0-9\-\.]+\/))([a-Z0-9\-]+)\/([a-Z0-9\-\.]+\.git)" ]]
+	if [[ $ORIGIN =~ "((git@[a-Z0-9\.\-]+:)|(https?:\/\/[a-Z0-9\.\-]+\/))([a-Z0-9\-]+)\/([a-Z0-9\.\-]+\.git)" ]]
 	then
 		SERVER=$match[1]
 		NAMESPACE=$match[4]
 		REPO=$match[5]
 	else
+		echo "$ORIGIN"
 		return
 	fi
 
