@@ -48,7 +48,7 @@ git submodule update
 
 nvim -c 'PlugInstall|qa!'
 nvim -c 'CocInstall -sync coc-explorer coc-git coc-highlight coc-json coc-lists coc-pyright coc-yaml|qa!'
-yarnpkg cache clean
+#yarnpkg cache clean
 
 cd $_PWD
 echo "done"
