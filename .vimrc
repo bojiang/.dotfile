@@ -5,7 +5,7 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'preservim/nerdcommenter'  " 快速注释
 Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮显示
 Plug 'ryanoasis/vim-devicons' " icons
-Plug 'tomasiser/vim-code-dark' " 主题
+Plug 'tomasiser/vim-code-dark', {'commit': '5c2c2d65ff908f4763c6af1cf3f100ab9a426e9e'} " 主题
 Plug 'roxma/vim-paste-easy' " set paste mode automatically
 Plug 'github/copilot.vim'
 Plug 'easymotion/vim-easymotion'
