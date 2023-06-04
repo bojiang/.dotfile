@@ -11,10 +11,10 @@ if [ ! -f $PWD/.dotfile_flag ] ; then
 	fi
 fi
 
-if [[ $(tmux -V 2>&1 | grep -Po '(?<=tmux )(.+)') < "3.0a" ]] ; then
-	echo ".dotfile requires tmux>=3.0a"
-	exit 1
-fi
+#if [[ $(tmux -V 2>&1 | grep -Po '(?<=tmux )(.+)') < "3.0a" ]] ; then
+	#echo ".dotfile requires tmux>=3.0a"
+	#exit 1
+#fi
 
 BACKUP_DIR=$PWD/backup/$(date +"%Y%m%d_%H%M%S")
 
