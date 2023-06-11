@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'v0.0.82'}
 Plug 'farmergreg/vim-lastplace'
 Plug 'preservim/nerdcommenter'  " 快速注释
 Plug 'nathanaelkane/vim-indent-guides' " 缩进高亮显示
