@@ -18,7 +18,7 @@ Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 colorscheme codedark
-let g:airline_theme = 'codedark'
+"let g:airline_theme = 'codedark'
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 set background=dark
