@@ -26,7 +26,7 @@ mkdir -p $HOME/.cache/vimundo
 mkdir -p $HOME/.config
 mkdir -p $HOME/.local/bin
 
-targets=".oh-my-zsh .zshrc .vim .vimrc .vimrc.before.local .config/coc .config/nvim .tmux .tmux.conf .profile .local/bin/docker-clean"
+targets=".oh-my-zsh .zshrc .config/nvim .tmux .tmux.conf .profile .local/bin/docker-clean"
 
 for target in $targets; do
 	[ -e $HOME/$target -o -L $HOME/$target ] && mv $HOME/$target $BACKUP_DIR/$target
@@ -45,10 +45,6 @@ ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 
 git submodule init
 git submodule update
-
-nvim -c 'PlugInstall|qa!'
-nvim -c 'CocInstall -sync coc-explorer coc-git coc-highlight coc-json coc-lists coc-pyright coc-yaml|qa!'
-#yarnpkg cache clean
 
 cd $_PWD
 echo "done"

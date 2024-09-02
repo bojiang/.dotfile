@@ -6,7 +6,7 @@ One dotfile to rule them all.
 
 Featured:
 * oh-my-zsh
-* coc.nvim
+* avante.nvim
 * many other vim plugins
 * docker-clean
 * many tmux plugins to display server status
@@ -20,8 +20,8 @@ Featured:
 
 * git >= 2.22
 * tmux >= 3.0a
-* vim >= 8
 * nodejs
+* neovim
 * [rg](https://command-not-found.com/rg)
 * [nerd fonts](https://github.com/ryanoasis/nerd-fonts) installed in your terminal simulator
 

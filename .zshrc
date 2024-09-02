@@ -61,7 +61,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(fzf git kubectl docker zsh-interactive-cd systemd)
+plugins=(fzf git kubectl docker zsh-interactive-cd systemd kube-ps1)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -173,13 +173,14 @@ alias gr='function _blah(){
 		NAMESPACE=$match[4]
 		REPO=$match[5]
 	else
-		return
+		echo "origin is not a valid git remote url: $ORIGIN"
+		return 1
 	fi
 
 	if [[ -z $1 ]] || [[ $1 == "-"* ]]
 	then
-		echo "git pull upstream master --rebase $@"
-		git pull upstream master --rebase $@
+		echo "git pull origin main --rebase $@"
+		git pull origin main --rebase $@
 	elif [[ $1 != "-"* ]] && ( [[ -z $2 ]] || [[ $2 == "-"* ]])
 	then
 		IFS=":" read -r REMOTE BRANCH <<< "$1"
@@ -187,8 +188,8 @@ alias gr='function _blah(){
 		if [[ -z $BRANCH ]]
 		then
 			BRANCH=$REMOTE
-			echo "git pull upstream $BRANCH --rebase $@"
-			git pull upstream $BRANCH --rebase $@
+			echo "git pull origin $BRANCH --rebase $@"
+			git pull origin $BRANCH --rebase $@
 		else
 			if git remote get-url $REMOTE > /dev/null 2>&1
 			then
@@ -223,3 +224,11 @@ if [ $commands[gh] ]; then
 	#compdump
 fi
 export PATH=$HOME/.dotfile/tool/docker-clean:$PATH
+
+# pnpm
+export PNPM_HOME="/home/agent/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
