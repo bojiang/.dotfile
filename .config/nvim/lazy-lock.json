@@ -1,5 +1,5 @@
 {
-  "avante.nvim": { "branch": "main", "commit": "713cb403d0e3c3b9b8b9cacb1ca0ff5d6fc35a7d" },
+  "avante.nvim": { "branch": "main", "commit": "054695cc635c8b1652442dff62f95d6c50a16f6f" },
   "copilot.lua": { "branch": "master", "commit": "86537b286f18783f8b67bccd78a4ef4345679625" },
   "dressing.nvim": { "branch": "master", "commit": "c5775a888adbc50652cb370073fcfec963eca93e" },
   "guess-indent.nvim": { "branch": "main", "commit": "6cd61f7a600bb756e558627cd2e740302c58e32d" },

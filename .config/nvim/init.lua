@@ -105,14 +105,13 @@ require("lazy").setup({
 
     {
       "yetone/avante.nvim",
+      commit = "054695cc635c8b1652442dff62f95d6c50a16f6f",
       event = "VeryLazy",
       lazy = false,
-      opts = {
-        -- add any opts here
-      },
+      opts = {},
       -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
       -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.
-      build = ":AvanteBuild source=false",
+      build = ":AvanteBuild",
       dependencies = {
         "stevearc/dressing.nvim",
         "nvim-lua/plenary.nvim",
@@ -193,15 +192,15 @@ vim.keymap.set('n', '<C-g>', '', {
   noremap = true,
   callback = function()
     local word = vim.fn.expand('<cword>')
+    local telescope_builtin = require('telescope.builtin')
     telescope_builtin.live_grep({
       default_text = word,
       additional_args = function(opts)
-        return { "--case-sensitive" }
+        return { "--case-sensitive", "--hidden", "--glob", "!.git/*" }
       end
     })
   end
 })
-
 
 vim.keymap.set({ 'n', 'i' }, '<C-e>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
@@ -216,3 +215,6 @@ vim.keymap.set('i', '<C-h>', '<left>', { silent = true })
 vim.keymap.set('i', '<C-l>', '<right>', { silent = true })
 vim.keymap.set('i', '<C-j>', '<down>', { silent = true })
 vim.keymap.set('i', '<C-k>', '<up>', { silent = true })
+
+vim.keymap.set('n', '<C-j>d', vim.lsp.buf.definition, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-j>r', vim.lsp.buf.references, { noremap = true, silent = true })
