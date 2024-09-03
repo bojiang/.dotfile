@@ -45,6 +45,7 @@ require("lazy").setup({
 
             vim.keymap.set('n', '<C-e>', api.tree.toggle, opts)
             vim.keymap.set('n', 'l', api.node.open.edit, opts)
+            vim.keymap.set('n', '<CR>', api.node.open.edit, opts)
             vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit, opts) -- 双击左键打开文件或目录
             -- vim.keymap.set('n', 'v', api.node.open.vertical, opts)         -- v 键垂直分割窗口打开文件
             -- vim.keymap.set('n', 's', api.node.open.horizontal, opts)       -- s 键水平分割窗口打开文件
@@ -55,6 +56,7 @@ require("lazy").setup({
         })
       end
     },
+
     { -- lists
       'nvim-telescope/telescope.nvim',
       tag = '0.1.8',
@@ -85,7 +87,9 @@ require("lazy").setup({
         telescope.load_extension('frecency')
       end
     },
+
     {
+      -- treesitter
       "nvim-treesitter/nvim-treesitter",
       build = ":TSUpdate",
       config = function()
@@ -98,6 +102,7 @@ require("lazy").setup({
         })
       end
     },
+
     {
       "yetone/avante.nvim",
       event = "VeryLazy",
@@ -105,22 +110,14 @@ require("lazy").setup({
       opts = {
         -- add any opts here
       },
-      build = ":AvanteBuild", -- This is optional, recommended tho. Also note that this will block the startup for a bit since we are compiling bindings in Rust.
-      config = function()
-        require("copilot").setup({
-          suggestion = {
-            enabled = true,
-            auto_trigger = true,
-          },
-          filetypes = {
-            ["*"] = true,
-          }
-        })
-      end,
+      -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
+      -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.
+      build = ":AvanteBuild source=false",
       dependencies = {
         "stevearc/dressing.nvim",
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
+        --- The below dependencies are optional,
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua",      -- for providers='copilot'
         {
@@ -128,6 +125,7 @@ require("lazy").setup({
           "HakonHarnes/img-clip.nvim",
           event = "VeryLazy",
           opts = {
+            -- recommended settings
             default = {
               embed_image_as_base64 = false,
               prompt_for_file_name = false,
@@ -140,6 +138,7 @@ require("lazy").setup({
           },
         },
         {
+          -- Make sure to setup it properly if you have lazy=true
           'MeanderingProgrammer/render-markdown.nvim',
           opts = {
             file_types = { "markdown", "Avante" },
@@ -148,7 +147,29 @@ require("lazy").setup({
         },
       },
     },
+
     { "Mofiqul/vscode.nvim" },
+
+    {
+      -- copilot
+      "zbirenbaum/copilot.lua",
+      config = function()
+        require("copilot").setup({
+          suggestion = {
+            enabled = true,
+            auto_trigger = true,
+            keymap = {
+              accept = "<Tab>",
+              next = "<C-j>",
+              prev = "<C-k>",
+            },
+          },
+          filetypes = {
+            ["*"] = true,
+          }
+        })
+      end,
+    },
   },
   install = { colorscheme = { "vscode" } },
   checker = { enabled = true },
