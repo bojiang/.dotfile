@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 vim.opt.rtp:prepend(vim.fn.stdpath("config") .. "/data/folke/lazy.nvim")
 
 vim.g.mapleader = " "
@@ -5,6 +7,17 @@ vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
   spec = {
+    { -- last place
+      "ethanholz/nvim-lastplace",
+      config = function()
+        require("nvim-lastplace").setup {
+          lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+          lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
+          lastplace_open_folds = true,
+        }
+      end
+    },
+
     { -- ls & format
       "neovim/nvim-lspconfig",
       dependencies = {
@@ -18,6 +31,7 @@ require("lazy").setup({
         require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
       end
     },
+
     { -- tree
       "nvim-tree/nvim-tree.lua",
       config = function()
@@ -110,11 +124,20 @@ require("lazy").setup({
     },
 
     {
+      -- avante
       "yetone/avante.nvim",
       commit = "054695cc635c8b1652442dff62f95d6c50a16f6f",
       event = "VeryLazy",
       lazy = false,
-      opts = {},
+      opts = {
+        hints = { enabled = false },
+        mappings = {
+          submit = {
+            normal = "<CR>",
+            insert = "<CR>",
+          },
+        },
+      },
       -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
       -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.
       build = ":AvanteBuild",
@@ -177,10 +200,8 @@ require("lazy").setup({
     },
   },
   install = { colorscheme = { "vscode" } },
-  checker = { enabled = true },
+  checker = { enabled = false },
 })
-
-
 
 
 -- VSCode theme
@@ -188,6 +209,9 @@ vim.cmd [[colorscheme vscode]]
 vim.cmd [[let g:vscode_transparent = 1]]
 vim.cmd [[let g:vscode_italic_comment = 1]]
 
+-- 在缓存目录保存undo文件
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath("cache") .. "/undo"
 
 
 -- key binds
@@ -202,7 +226,7 @@ vim.keymap.set('n', '<C-g>', function()
   })
 end, { noremap = true })
 
-vim.keymap.set({ 'n', 'i' }, '<C-e>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-e>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader><Space>', ':AvanteAsk<CR>', { silent = true })
 vim.keymap.set('v', '<leader><Space>', require('avante.api').edit, { silent = true })
