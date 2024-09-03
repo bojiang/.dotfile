@@ -164,7 +164,7 @@ require("lazy").setup({
             enabled = true,
             auto_trigger = true,
             keymap = {
-              accept = "<S-Tab>",
+              accept = "<Tab>",
               next = "<C-j>",
               prev = "<C-k>",
             },
@@ -194,23 +194,18 @@ vim.cmd [[let g:vscode_italic_comment = 1]]
 vim.keymap.set('n', '<C-f>', '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>',
   { noremap = true, silent = true })
 
-vim.keymap.set('n', '<C-g>', '', {
-  noremap = true,
-  callback = function()
-    local word = vim.fn.expand('<cword>')
-    local telescope_builtin = require('telescope.builtin')
-    telescope_builtin.live_grep({
-      default_text = word,
-      additional_args = function(opts)
-        return { "--case-sensitive", "--hidden", "--glob", "!.git/*" }
-      end
-    })
-  end
-})
+vim.keymap.set('n', '<C-g>', function()
+  local word = vim.fn.expand('<cword>')
+  require('telescope.builtin').live_grep({
+    default_text = word,
+    additional_args = { "--case-sensitive", "--hidden", "--glob", "!.git/*" }
+  })
+end, { noremap = true })
 
 vim.keymap.set({ 'n', 'i' }, '<C-e>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader><Space>', ':AvanteAsk<CR>', { silent = true })
+vim.keymap.set('v', '<leader><Space>', require('avante.api').edit, { silent = true })
 
 vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
