@@ -45,12 +45,18 @@ require("lazy").setup({
 
             vim.keymap.set('n', '<C-e>', api.tree.toggle, opts)
             vim.keymap.set('n', 'l', api.node.open.edit, opts)
+            vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts)
             vim.keymap.set('n', '<CR>', api.node.open.edit, opts)
-            vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit, opts) -- 双击左键打开文件或目录
+            vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit, opts)
+            vim.keymap.set('n', 'r', api.fs.rename, opts)
+            vim.keymap.set('n', 'yy', api.fs.copy.node, opts)
+            vim.keymap.set('n', 'dd', api.fs.cut, opts)
+            vim.keymap.set('n', 'p', api.fs.paste, opts)
+            vim.keymap.set('n', 'df', api.fs.remove, opts)
             -- vim.keymap.set('n', 'v', api.node.open.vertical, opts)         -- v 键垂直分割窗口打开文件
             -- vim.keymap.set('n', 's', api.node.open.horizontal, opts)       -- s 键水平分割窗口打开文件
             vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts) -- I 键切换隐藏文件显示
-            vim.keymap.set('n', 'R', api.tree.reload, opts)               -- R 键重新加载文件树
+            vim.keymap.set('n', '<C-r>', api.tree.reload, opts)           -- R 键重新加载文件树
             vim.keymap.set('n', '<Space>', api.node.open.preview, opts)
           end
         })
@@ -158,7 +164,7 @@ require("lazy").setup({
             enabled = true,
             auto_trigger = true,
             keymap = {
-              accept = "<Tab>",
+              accept = "<S-Tab>",
               next = "<C-j>",
               prev = "<C-k>",
             },
