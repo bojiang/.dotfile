@@ -34,3 +34,6 @@
 [submodule ".tmux/plugins/aw-watcher-tmux"]
 	path = .tmux/plugins/aw-watcher-tmux
 	url = https://git::@github.com/akohlbecker/aw-watcher-tmux
+[submodule ".config/nvim/data/folke/lazy.nvim"]
+	path = .config/nvim/data/folke/lazy.nvim
+	url = https://github.com/folke/lazy.nvim.git
