@@ -7,6 +7,13 @@ vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
   spec = {
+    { -- comment
+      "numToStr/Comment.nvim",
+      config = function()
+        require("Comment").setup()
+      end
+    },
+
     { -- last place
       "ethanholz/nvim-lastplace",
       config = function()
@@ -64,11 +71,10 @@ require("lazy").setup({
             vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit, opts)
             vim.keymap.set('n', 'r', api.fs.rename, opts)
             vim.keymap.set('n', 'yy', api.fs.copy.node, opts)
+            vim.keymap.set('n', 'y', api.fs.copy.absolute_path, opts)
             vim.keymap.set('n', 'dd', api.fs.cut, opts)
             vim.keymap.set('n', 'p', api.fs.paste, opts)
             vim.keymap.set('n', 'df', api.fs.remove, opts)
-            -- vim.keymap.set('n', 'v', api.node.open.vertical, opts)         -- v 键垂直分割窗口打开文件
-            -- vim.keymap.set('n', 's', api.node.open.horizontal, opts)       -- s 键水平分割窗口打开文件
             vim.keymap.set('n', 'I', api.tree.toggle_hidden_filter, opts) -- I 键切换隐藏文件显示
             vim.keymap.set('n', '<C-r>', api.tree.reload, opts)           -- R 键重新加载文件树
             vim.keymap.set('n', '<Space>', api.node.open.preview, opts)
@@ -176,7 +182,15 @@ require("lazy").setup({
       },
     },
 
-    { "Mofiqul/vscode.nvim" },
+    {
+      -- vscode theme
+      "Mofiqul/vscode.nvim",
+      config = function()
+        vim.cmd [[colorscheme vscode]]
+        vim.cmd [[let g:vscode_transparent = 1]]
+        vim.cmd [[let g:vscode_italic_comment = 1]]
+      end,
+    },
 
     {
       -- copilot
@@ -199,24 +213,21 @@ require("lazy").setup({
       end,
     },
   },
-  install = { colorscheme = { "vscode" } },
+  -- install = { colorscheme = { "vscode" } },
   checker = { enabled = false },
 })
-
-
--- VSCode theme
-vim.cmd [[colorscheme vscode]]
-vim.cmd [[let g:vscode_transparent = 1]]
-vim.cmd [[let g:vscode_italic_comment = 1]]
 
 -- 在缓存目录保存undo文件
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath("cache") .. "/undo"
 
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- key binds
-vim.keymap.set('n', '<C-f>', '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>',
-  { noremap = true, silent = true })
+vim.keymap.set('n', '<C-f>', require("telescope").extensions.frecency.frecency, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-n>', '<cmd>Telescope resume<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<C-g>', function()
   local word = vim.fn.expand('<cword>')
