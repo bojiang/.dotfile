@@ -120,7 +120,7 @@ require("lazy").setup({
       build = ":TSUpdate",
       config = function()
         require('nvim-treesitter.configs').setup({
-          ensure_installed = { "c", "lua", "python" },
+          ensure_installed = { "c", "lua", "python", "markdown", "markdown_inline" },
           highlight = {
             enable = true,
             additional_vim_regex_highlighting = false,
