@@ -3,6 +3,9 @@
 export ZSH=$HOME/.oh-my-zsh
 [[ -e ~/.zprofile ]] && source ~/.zprofile
 
+if [ -f $HOME/.dotfile/custom/zshrc ]; then
+	source $HOME/.dotfile/custom/zshrc
+fi
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -21,6 +24,10 @@ CASE_SENSITIVE="true"
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
 
+export ZSH_AI_COMMANDS_HOTKEY='^I^I^I'
+
+alias vim=nvim
+
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -29,7 +36,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl docker zsh-interactive-cd systemd)
+plugins=(git kubectl docker zsh-interactive-cd systemd zsh-ai-commands)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -182,9 +189,6 @@ export TERM=xterm-256color
 
 # dotfile
 alias dotupdate='$HOME/.dotfile/update.sh'
-if [ -f $HOME/.dotfile/custom/zshrc ]; then
-	source $HOME/.dotfile/custom/zshrc
-fi
 
 # more completion
 if [ $commands[gh] ]; then
@@ -201,3 +205,5 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+#
+
