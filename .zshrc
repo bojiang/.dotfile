@@ -25,6 +25,7 @@ CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 
 export ZSH_AI_COMMANDS_HOTKEY='^I^I^I'
+export ZSH_CUSTOM=$HOME/.dotfile/oh_my_zsh_custom
 
 alias vim=nvim
 
