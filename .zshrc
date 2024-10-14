@@ -61,14 +61,19 @@ alias gbcl="git branch --merged | xargs git branch -d"
 
 alias gp='function _blah(){
 	ORIGIN="$(git remote get-url origin)"
-	if [[ $ORIGIN =~ "((git@[a-Z0-9\.\-]+:)|(https?:\/\/[a-Z0-9\.\-]+\/))([a-Z0-9\-]+)\/([a-Z0-9\.\-]+\.git)" ]]
-	then
-		SERVER=$match[1]
-		NAMESPACE=$match[4]
-		REPO=$match[5]
+	if [[ $ORIGIN =~ ^git@([^:]+):([^/]+)/(.+)\.git$ ]]; then
+	    # SSH 格式: git@server:namespace/repo.git
+	    SERVER=${BASH_REMATCH[1]}
+	    NAMESPACE=${BASH_REMATCH[2]}
+	    REPO=${BASH_REMATCH[3]}
+	elif [[ $ORIGIN =~ ^https?://([^/]+)/([^/]+)/(.+)\.git$ ]]; then
+	    # HTTPS 格式: https://server/namespace/repo.git
+	    SERVER=${BASH_REMATCH[1]}
+	    NAMESPACE=${BASH_REMATCH[2]}
+	    REPO=${BASH_REMATCH[3]}
 	else
-		echo "$ORIGIN"
-		return
+	    echo "无法识别的 remote URL 格式: $ORIGIN"
+	    exit 1
 	fi
 
 	if [[ -z $1 ]] || [[ $1 == "-"* ]]
@@ -103,14 +108,19 @@ alias grc="git rebase --continue"
 alias gra="git rebase --abort"
 alias gr='function _blah(){
 	ORIGIN="$(git remote get-url origin)"
-	if [[ $ORIGIN =~ "((git@[a-Z0-9\.\-]+:)|(https?:\/\/[a-Z0-9\.\-]+\/))([a-Z0-9\-]+)\/([a-Z0-9\.\-]+\.git)" ]]
-	then
-		SERVER=$match[1]
-		NAMESPACE=$match[4]
-		REPO=$match[5]
+	if [[ $ORIGIN =~ ^git@([^:]+):([^/]+)/(.+)\.git$ ]]; then
+	    # SSH 格式: git@server:namespace/repo.git
+	    SERVER=${BASH_REMATCH[1]}
+	    NAMESPACE=${BASH_REMATCH[2]}
+	    REPO=${BASH_REMATCH[3]}
+	elif [[ $ORIGIN =~ ^https?://([^/]+)/([^/]+)/(.+)\.git$ ]]; then
+	    # HTTPS 格式: https://server/namespace/repo.git
+	    SERVER=${BASH_REMATCH[1]}
+	    NAMESPACE=${BASH_REMATCH[2]}
+	    REPO=${BASH_REMATCH[3]}
 	else
-		echo "origin is not a valid git remote url: $ORIGIN"
-		return 1
+	    echo "无法识别的 remote URL 格式: $ORIGIN"
+	    exit 1
 	fi
 
 	if [[ -z $1 ]] || [[ $1 == "-"* ]]
