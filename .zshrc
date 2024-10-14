@@ -176,5 +176,28 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-#
 
+# Function to activate virtual environment
+activate_venv() {
+    if [[ -d ".venv" ]]; then
+        source .venv/bin/activate
+    fi
+}
+
+# Activate venv in the current directory
+activate_venv
+
+# Auto-activate venv when changing directories
+autoload -U add-zsh-hook
+add-zsh-hook chpwd activate_venv
+
+# Hook for uv venv creation
+uv_venv() {
+    if [[ "$1" == "venv" ]]; then
+        command uv venv "${@:2}"
+        activate_venv
+    else
+        command uv "$@"
+    fi
+}
+alias uv=uv_venv
