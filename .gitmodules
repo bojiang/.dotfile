@@ -37,3 +37,6 @@
 [submodule ".config/nvim/data/folke/lazy.nvim"]
 	path = .config/nvim/data/folke/lazy.nvim
 	url = https://github.com/folke/lazy.nvim.git
+[submodule "oh_my_zsh_custom/plugins/zsh-ai-commands"]
+	path = oh_my_zsh_custom/plugins/zsh-ai-commands
+	url = https://github.com/muePatrick/zsh-ai-commands
