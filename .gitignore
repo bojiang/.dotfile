@@ -1,11 +1,10 @@
 cache/
 backup/
-custom/
+/custom/
 .tmux/resurrect/
 .vim/sessions/
 .vim/plugged/
 .vim/.netrwhist
-.config/coc/*
 Dockerfile
 docker-compose.yml
 .gitignore
