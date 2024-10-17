@@ -16,7 +16,7 @@ export ZSH_AI_COMMANDS_HOTKEY='^I^I^I'
 export ZSH_CUSTOM=$HOME/.dotfile/oh_my_zsh_custom
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH=/opt/homebrew/bin:$PATH
+    export PATH=/opt/homebrew/bin:/Users/agent/Library/Python/3.9/bin/:$PATH
 fi
 
 export ZSH_AI_COMMANDS_OPENAI_API_KEY=$OPENAI_API_KEY

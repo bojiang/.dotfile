@@ -36,6 +36,14 @@ require("lazy").setup({
         require("lsp-format").setup {}
         require("lspconfig").pyright.setup { on_attach = require("lsp-format").on_attach }
         require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
+        require('lspconfig').ruff_lsp.setup {
+          init_options = {
+            settings = {
+              args = {},
+            }
+          }
+        }
+        vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
       end
     },
 
