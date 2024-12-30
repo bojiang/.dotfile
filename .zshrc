@@ -1,3 +1,5 @@
+
+fpath=(~/.zsh/completion $fpath)
 # If you come from bash you might have to change your $PATH.
 
 export ZSH=$HOME/.oh-my-zsh
@@ -73,7 +75,7 @@ alias gp='function _blah(){
 	    REPO=${BASH_REMATCH[3]}
 	else
 	    echo "无法识别的 remote URL 格式: $ORIGIN"
-	    exit 1
+	    return
 	fi
 
 	if [[ -z $1 ]] || [[ $1 == "-"* ]]
@@ -120,7 +122,7 @@ alias gr='function _blah(){
 	    REPO=${BASH_REMATCH[3]}
 	else
 	    echo "无法识别的 remote URL 格式: $ORIGIN"
-	    exit 1
+	    return
 	fi
 
 	if [[ -z $1 ]] || [[ $1 == "-"* ]]

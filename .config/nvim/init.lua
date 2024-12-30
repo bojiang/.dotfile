@@ -36,7 +36,8 @@ require("lazy").setup({
         require("lsp-format").setup {}
         require("lspconfig").pyright.setup { on_attach = require("lsp-format").on_attach }
         require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
-        require('lspconfig').ruff_lsp.setup {
+        require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
+        require('lspconfig').ruff.setup {
           init_options = {
             settings = {
               args = {},
@@ -44,6 +45,7 @@ require("lazy").setup({
           }
         }
         vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
+        vim.api.nvim_set_keymap('n', '<space>', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
       end
     },
 
@@ -140,7 +142,6 @@ require("lazy").setup({
     {
       -- avante
       "yetone/avante.nvim",
-      commit = "054695cc635c8b1652442dff62f95d6c50a16f6f",
       event = "VeryLazy",
       lazy = false,
       opts = {
