@@ -145,6 +145,7 @@ require("lazy").setup({
       event = "VeryLazy",
       lazy = false,
       opts = {
+        debug = true,
         hints = { enabled = false },
         mappings = {
           submit = {
