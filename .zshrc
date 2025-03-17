@@ -203,3 +203,5 @@ uv_venv() {
     fi
 }
 alias uv=uv_venv
+
+. "$HOME/.local/bin/env"

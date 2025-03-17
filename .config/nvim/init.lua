@@ -35,7 +35,7 @@ require("lazy").setup({
         require('guess-indent').setup {}
         require("lsp-format").setup {}
         require("lspconfig").pyright.setup { on_attach = require("lsp-format").on_attach }
-        require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
+        -- require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
         require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
         require('lspconfig').ruff.setup {
           init_options = {
@@ -99,6 +99,7 @@ require("lazy").setup({
       dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-telescope/telescope-frecency.nvim',
+        'mollerhoj/telescope-recent-files.nvim',
       },
       config = function()
         local telescope = require('telescope')
@@ -121,6 +122,7 @@ require("lazy").setup({
           },
         })
         telescope.load_extension('frecency')
+        telescope.load_extension('recent-files')
       end
     },
 
@@ -152,6 +154,38 @@ require("lazy").setup({
             normal = "<CR>",
             insert = "<CR>",
           },
+        },
+        provider = "claude",
+        claude = {
+          endpoint = "https://babeltower.cn",
+          model = "claude-3-7-sonnet-latest",
+          timeout = 60000, -- Timeout in milliseconds
+          temperature = 0,
+          -- max_tokens = 4096,
+          api_key_name = "BBT_API_KEY",
+          -- disabled_tools = { "python" },
+        },
+        openai = {
+          endpoint = "https://babeltower.cn/v1",
+          model = "qwq-32b:groq", -- your desired model (or use gpt-4o, etc.)
+          timeout = 30000, -- timeout in milliseconds
+          temperature = 0, -- adjust if needed
+          max_tokens = 4096,
+          api_key_name = "BBT_API_KEY",
+        },
+        cursor_applying_provider = 'groq',
+        behaviour = {
+          enable_cursor_planning_mode = true, -- enable cursor planning mode!
+        },
+        vendors = {
+        --- ... existing vendors
+            groq = { -- define groq provider
+                __inherited_from = 'openai',
+                api_key_name = 'GROQ_API_KEY',
+                endpoint = 'https://api.groq.com/openai/v1/',
+                model = 'llama-3.3-70b-versatile',
+                max_tokens = 8192, -- remember to increase this value, otherwise it will stop generating halfway
+            },
         },
       },
       -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
@@ -195,6 +229,7 @@ require("lazy").setup({
     {
       -- vscode theme
       "Mofiqul/vscode.nvim",
+      commit = "7331e8316d558e9b3f63b066e98029704f281e91",
       config = function()
         vim.cmd [[colorscheme vscode]]
         vim.cmd [[let g:vscode_transparent = 1]]
@@ -235,7 +270,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- key binds
-vim.keymap.set('n', '<C-f>', require("telescope").extensions.frecency.frecency, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-f>', require('telescope').extensions['recent-files'].recent_files, { noremap = true, silent = true })
 vim.keymap.set('n', '<C-n>', '<cmd>Telescope resume<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<CR>', { noremap = true, silent = true })
 
@@ -243,7 +278,7 @@ vim.keymap.set('n', '<C-g>', function()
   local word = vim.fn.expand('<cword>')
   require('telescope.builtin').live_grep({
     default_text = word,
-    additional_args = { "--case-sensitive", "--hidden", "--glob", "!.git/*" }
+    additional_args = { "--case-sensitive", "--hidden", "--glob", "!.git/*", "--word-regexp" }
   })
 end, { noremap = true })
 
