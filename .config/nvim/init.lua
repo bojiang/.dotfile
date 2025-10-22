@@ -59,6 +59,7 @@ require("lazy").setup({
           },
           git = {
             enable = true,
+            ignore = false,
           },
           update_focused_file = {
             enable = true,
@@ -293,6 +294,14 @@ vim.keymap.set('n', '<C-g>', function()
   require('telescope.builtin').live_grep({
     default_text = word,
     additional_args = { "--case-sensitive", "--hidden", "--glob", "!.git/*", "--word-regexp" }
+  })
+end, { noremap = true })
+
+vim.keymap.set('n', '<C-g><C-g>', function()
+  local word = vim.fn.expand('<cword>')
+  require('telescope.builtin').live_grep({
+    default_text = word,
+    additional_args = { "--case-sensitive", "--hidden", "--glob", "!.git/*" }
   })
 end, { noremap = true })
 
