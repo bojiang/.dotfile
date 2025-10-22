@@ -60,6 +60,10 @@ require("lazy").setup({
           git = {
             enable = true,
           },
+          update_focused_file = {
+            enable = true,
+            update_root = false,
+          },
           renderer = {
             icons = {
               show = {
@@ -155,37 +159,47 @@ require("lazy").setup({
             insert = "<CR>",
           },
         },
-        provider = "claude",
-        claude = {
-          endpoint = "https://babeltower.cn",
-          model = "claude-3-7-sonnet-latest",
-          timeout = 60000, -- Timeout in milliseconds
-          temperature = 0,
-          -- max_tokens = 4096,
-          api_key_name = "BBT_API_KEY",
-          -- disabled_tools = { "python" },
+        -- provider = "claude",
+        -- provider = "openai",
+        provider = "gemini",
+        providers = {
+          claude = {
+            -- endpoint = "https://babeltower.pro",
+            model = "claude-sonnet-4-20250514",
+            timeout = 60000, -- Timeout in milliseconds
+            -- api_key_name = "BBT_API_KEY",
+          },
+          gemini = {
+            model = "gemini-2.5-pro", -- your desired model (or use gpt-4o, etc.)
+            timeout = 30000, -- timeout in milliseconds
+            api_key_name = "GEMINI_API_KEY",
+          },
+          openai = {
+            endpoint = "https://babeltower.pro/v1",
+            model = "gemini-2.5-pro:google", -- your desired model (or use gpt-4o, etc.)
+            timeout = 30000, -- timeout in milliseconds
+            api_key_name = "BBT_API_KEY",
+          },
+          groq = { -- define groq provider
+              __inherited_from = 'openai',
+              api_key_name = 'GROQ_API_KEY',
+              endpoint = 'https://api.groq.com/openai/v1/',
+              model = 'llama-3.3-70b-versatile',
+              max_tokens = 8192, -- remember to increase this value, otherwise it will stop generating halfway
+          },
         },
-        openai = {
-          endpoint = "https://babeltower.cn/v1",
-          model = "qwq-32b:groq", -- your desired model (or use gpt-4o, etc.)
-          timeout = 30000, -- timeout in milliseconds
-          temperature = 0, -- adjust if needed
-          max_tokens = 4096,
-          api_key_name = "BBT_API_KEY",
-        },
+        disabled_tools = { "python" },
+        -- history = {
+        --   max_tokens = 0,
+        -- },
         cursor_applying_provider = 'groq',
         behaviour = {
-          enable_cursor_planning_mode = true, -- enable cursor planning mode!
+          enable_cursor_planning_mode = false,
+          auto_apply_diff_after_generation = true,
+          enable_claude_text_editor_tool_mode = true,
         },
         vendors = {
         --- ... existing vendors
-            groq = { -- define groq provider
-                __inherited_from = 'openai',
-                api_key_name = 'GROQ_API_KEY',
-                endpoint = 'https://api.groq.com/openai/v1/',
-                model = 'llama-3.3-70b-versatile',
-                max_tokens = 8192, -- remember to increase this value, otherwise it will stop generating halfway
-            },
         },
       },
       -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.

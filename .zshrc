@@ -25,9 +25,11 @@ export ZSH_AI_COMMANDS_OPENAI_API_KEY=$OPENAI_API_KEY
 
 alias vim=nvim
 
-plugins=(git kubectl docker zsh-interactive-cd systemd zsh-ai-commands)
+plugins=(zsh-autosuggestions git kubectl docker zsh-interactive-cd systemd zsh-ai-commands)
 
 source $ZSH/oh-my-zsh.sh
+
+export SMART_SUGGESTION_DEBUG=true
 
 # docker
 alias dls="docker container list"
@@ -163,6 +165,9 @@ export TERM=xterm-256color
 # dotfile
 alias dotupdate='$HOME/.dotfile/update.sh'
 
+# tmux
+alias t='tmux new-session -s $(basename $(pwd))'
+
 # more completion
 if [ $commands[gh] ]; then
 	source <(gh completion --shell zsh)
@@ -205,3 +210,9 @@ uv_venv() {
 alias uv=uv_venv
 
 . "$HOME/.local/bin/env"
+
+# Smart Suggestion # smart-suggestion
+source /Users/agent/.config/smart-suggestion/smart-suggestion.plugin.zsh # smart-suggestion
+
+# opencode
+export PATH=/Users/agent/.opencode/bin:$PATH
