@@ -3,3 +3,4 @@
 *.swp
 .eslintrc.js
 .bolt
+_refs/

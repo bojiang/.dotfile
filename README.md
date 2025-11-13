@@ -11,6 +11,7 @@ Featured:
 * docker-clean
 * many tmux plugins to display server status
 * handy git configurations
+* Claude Code configuration template
 * keep updated with git & git submodule
 
 

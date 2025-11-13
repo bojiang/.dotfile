@@ -25,7 +25,7 @@ export ZSH_AI_COMMANDS_OPENAI_API_KEY=$OPENAI_API_KEY
 
 alias vim=nvim
 
-plugins=(zsh-autosuggestions git kubectl docker zsh-interactive-cd systemd zsh-ai-commands)
+plugins=(git kubectl docker zsh-interactive-cd systemd zsh-ai-commands)
 
 source $ZSH/oh-my-zsh.sh
 
