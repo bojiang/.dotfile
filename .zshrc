@@ -31,6 +31,9 @@ source $ZSH/oh-my-zsh.sh
 
 export SMART_SUGGESTION_DEBUG=true
 
+# ai tools
+alias cc="ANTHROPIC_API_KEY=sk-dummy ANTHROPIC_BASE_URL=http://localhost:4141 claude --dangerously-skip-permissions"
+
 # docker
 alias dls="docker container list"
 alias dr="docker container restart "
@@ -216,3 +219,6 @@ source /Users/agent/.config/smart-suggestion/smart-suggestion.plugin.zsh # smart
 
 # opencode
 export PATH=/Users/agent/.opencode/bin:$PATH
+
+# Added by Antigravity
+export PATH="/Users/agent/.antigravity/antigravity/bin:$PATH"
