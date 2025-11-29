@@ -59,6 +59,12 @@ alias gu='function _blah(){
 	fi
 };_blah'
 
+alias m4a2mp3='function _blah(){
+	for f in *.m4a; do
+		ffmpeg -i "$f" -codec:a libmp3lame -b:a 320k "${f%.m4a}.mp3"
+	done
+};_blah'
+
 alias gs="git --no-pager branch;git --no-pager log --decorate=short --pretty=oneline -n 5;git status"
 alias gc="git commit --all -v"
 alias gca="git commit --all --amend -v"
