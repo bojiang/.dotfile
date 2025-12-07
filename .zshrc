@@ -220,9 +220,6 @@ alias uv=uv_venv
 
 . "$HOME/.local/bin/env"
 
-# Smart Suggestion # smart-suggestion
-source /Users/agent/.config/smart-suggestion/smart-suggestion.plugin.zsh # smart-suggestion
-
 # opencode
 export PATH=/Users/agent/.opencode/bin:$PATH
 
