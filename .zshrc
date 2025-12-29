@@ -225,3 +225,10 @@ export PATH=/Users/agent/.opencode/bin:$PATH
 
 # Added by Antigravity
 export PATH="/Users/agent/.antigravity/antigravity/bin:$PATH"
+
+# bun completions
+[ -s "/Users/agent/.bun/_bun" ] && source "/Users/agent/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
