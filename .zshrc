@@ -46,6 +46,15 @@ alias gu='function _blah(){
 	git config user.name "$1"
 	git config user.email "$2"
 
+	# SSH key configuration
+	if [[ "$1" == "a0gent" ]]; then
+		git config core.sshCommand "ssh -i ~/.ssh/id_ed25519"
+		echo "SSH key: ~/.ssh/id_ed25519"
+	else
+		git config --unset core.sshCommand 2>/dev/null || true
+		echo "SSH key: default"
+	fi
+
 	KEYS=$(gpg --list-keys)
 	echo $KEYS
 
@@ -63,6 +72,59 @@ alias m4a2mp3='function _blah(){
 	for f in *.m4a; do
 		ffmpeg -i "$f" -codec:a libmp3lame -b:a 320k "${f%.m4a}.mp3"
 	done
+};_blah'
+
+alias mp42mp3='function _blah(){
+	local mp4_files=(*.mp4)
+	if [[ ! -f "${mp4_files[0]}" ]]; then
+		echo "No MP4 files found in current directory."
+		return
+	fi
+
+	local total=${#mp4_files[@]}
+	local max_concurrent=8
+	local temp_dir=$(mktemp -d)
+	local pids=()
+
+	echo "Converting $total MP4 files to MP3 (max $max_concurrent concurrent)..."
+	echo "Start time: $(date)"
+
+	for file in "${mp4_files[@]}"; do
+		while (( ${#pids[@]} >= max_concurrent )); do
+			for i in "${!pids[@]}"; do
+				if ! kill -0 "${pids[i]}" 2>/dev/null; then
+					unset "pids[i]"
+				fi
+			done
+			pids=("${pids[@]}")
+			[[ ${#pids[@]} -ge $max_concurrent ]] && sleep 0.1
+		done
+
+		(
+			output="${file%.mp4}.mp3"
+			if ffmpeg -i "$file" -vn -acodec mp3 -ab 192k -ar 44100 -y "$output" 2>/dev/null; then
+				echo "✓ $(date +%T) Success: $output" | tee "$temp_dir/success_$$.log"
+			else
+				echo "✗ $(date +%T) Failed: $file" | tee "$temp_dir/failed_$$.log"
+			fi
+		) &
+		pids+=($!)
+		echo "Started: $file (PID: $!)"
+	done
+
+	echo "Waiting for all conversions to complete..."
+	wait
+
+	local success_count=$(find "$temp_dir" -name "success_*.log" 2>/dev/null | wc -l)
+	local failed_count=$(find "$temp_dir" -name "failed_*.log" 2>/dev/null | wc -l)
+
+	echo "=== Conversion Summary ==="
+	echo "Total files: $total"
+	echo "Successful: $success_count"
+	echo "Failed: $failed_count"
+	echo "End time: $(date)"
+
+	rm -rf "$temp_dir"
 };_blah'
 
 alias gs="git --no-pager branch;git --no-pager log --decorate=short --pretty=oneline -n 5;git status"
@@ -228,3 +290,10 @@ export PATH=/Users/agent/.opencode/bin:$PATH
 
 # Added by Antigravity
 export PATH="/Users/agent/.antigravity/antigravity/bin:$PATH"
+
+# bun completions
+[ -s "/Users/agent/.bun/_bun" ] && source "/Users/agent/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
