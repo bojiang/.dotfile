@@ -5,6 +5,21 @@ vim.opt.rtp:prepend(vim.fn.stdpath("config") .. "/data/folke/lazy.nvim")
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+vim.lsp.config('ty', {
+  cmd = { 'ty', 'server' },
+  settings = {
+    ty = {
+      -- ty language server settings go here
+    }
+  }
+})
+vim.lsp.enable('ty')
+
+vim.lsp.enable('gopls')
+
+vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
+vim.api.nvim_set_keymap('n', '<space>', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+
 require("lazy").setup({
   spec = {
     { -- comment
@@ -22,30 +37,6 @@ require("lazy").setup({
           lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
           lastplace_open_folds = true,
         }
-      end
-    },
-
-    { -- ls & format
-      "neovim/nvim-lspconfig",
-      dependencies = {
-        "lukas-reineke/lsp-format.nvim",
-        "nmac427/guess-indent.nvim",
-      },
-      config = function()
-        require('guess-indent').setup {}
-        require("lsp-format").setup {}
-        require("lspconfig").pyright.setup { on_attach = require("lsp-format").on_attach }
-        -- require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
-        require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
-        require('lspconfig').ruff.setup {
-          init_options = {
-            settings = {
-              args = {},
-            }
-          }
-        }
-        vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
-        vim.api.nvim_set_keymap('n', '<space>', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
       end
     },
 

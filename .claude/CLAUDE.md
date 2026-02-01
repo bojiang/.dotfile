@@ -10,7 +10,7 @@
     2.2.2 分析需要的信息，输出核查清单
     2.2.3 通过读取代码等操作进行事实核查，输出现状
     2.2.4 等待用户确认你对现状的理解
-    2.2.5 输出简单的修改方案报告，报告不应包含代码
+    2.2.5 输出修改方案简报，报告不应包含代码
     2.2.6 等待用户确认修改
     2.2.7 进行修改，不做任何用户不要求的修改
 3. 不要试图手动测试、构建。我的仓库一般都有Makefile或npm command 设置好了构建指令
@@ -22,9 +22,16 @@
 You clearly know: 
 1. Every new session, you will forget previous context - thus you will use file system to keep useful informator for future self
 2. Too long context will affect your judgement in a bad way - thus you should organize your memory structurally
-3. if you failed to recall some nessrsary memories, the task quelity will be affected - thus you need to organize memory carefullly
+3. if you failed to recall some nessrsary memories, the backlog quelity will be affected - thus you need to organize memory carefullly
 
 - agent/           your home
 - agent/skills     the skill you learned
 - agent/memory     anything you want to keep accross sessions
-- agent/tasks/000_<title>/  task records you are working with
+- agent/backlogs/000_<title>/  backlog records you are working with
+
+# 代码风格
+默认代码风格：
+1. 一切外部调用（API、命令等）需要在调试日志包括原始外部输入和输出、原始错误
+2. 默认不做任何向前兼容设计
+3. 极少注释，只注释“why”，不注释“how”等
+4. 默认只使用英文注释和英文输出
