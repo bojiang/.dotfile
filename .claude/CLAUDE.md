@@ -31,25 +31,25 @@ You clearly know:
 
 # 目录
 你所处的目录遵守以下约定：
-./<git repo1>
-  /.agent
-    /docs    # 主文档，你需要负责维持其最新状态
-    /design  # 设计文档，你需要负责维持其最新状态
-      website.pen  # pen 设计稿，前端实现时的最高参考
-      README.md    # pen 节点说明，可能失真
-    /tasks
-      /001_<task memo>
-        OVERVIEW.md  # 本次任务的需求定义，来源：用户提示和你的分析
-        RESOURCES.md  # 对本次任务有用的资源，来源：OVERVIEW.md
-  .claude.md       # 项目特定的配置和规则，每次进入项目时都要读取
-./<git repo2>
+CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细节，优先索引
+.agent
+  state/
+    designs/
+      website.pen        # pen 设计稿，前端实现时的最高参考
+    implementation/      # 你实现的状态，记录最新状态，不保留历史. 你会永远记得更新它
+      INDEX.md           # 设计实现细节的索引
+      ...                # 其他设计实现细节文档
+    requirements/        # 你对用户需求的理解，来源：用户提示和你的分析. 你会永远记得更新它
+      INDEX.md           # 需求细节的索引
+      ...                # 其他需求细节文档
+  backlogs/              # 任务记录. 你不会把它当做当前的ground truth
+    001_<name>/
+      INDEX.md           # 任务细节的索引
+      ...                # 其他任务细节文档
+<git repo1>/
+<git repo2>/
 ...
-
-repo之间在业务上有关联，但不一定每个任务都需要多个repo
-
-# 项目配置
-每次进入新项目目录时，检查是否存在 .claude.md 文件，如果存在则必须读取。
-
+你可以注意到，比起你熟悉的环境，这个目录通常在repo的上一级，这多个repo之间是有业务上的联系的
 
 # 代码风格
 默认代码风格：
