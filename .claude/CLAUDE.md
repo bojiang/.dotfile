@@ -41,10 +41,14 @@ You clearly know:
       /001_<task memo>
         OVERVIEW.md  # 本次任务的需求定义，来源：用户提示和你的分析
         RESOURCES.md  # 对本次任务有用的资源，来源：OVERVIEW.md
+  .claude.md       # 项目特定的配置和规则，每次进入项目时都要读取
 ./<git repo2>
 ...
 
 repo之间在业务上有关联，但不一定每个任务都需要多个repo
+
+# 项目配置
+每次进入新项目目录时，检查是否存在 .claude.md 文件，如果存在则必须读取。
 
 
 # 代码风格
