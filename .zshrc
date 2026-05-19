@@ -218,7 +218,7 @@ uv_venv() {
 }
 alias uv=uv_venv
 
-. "$HOME/.local/bin/env"
+# . "$HOME/.local/bin/env"
 
 # opencode
 export PATH=/Users/agent/.opencode/bin:$PATH

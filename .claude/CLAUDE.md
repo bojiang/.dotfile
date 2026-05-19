@@ -16,3 +16,15 @@
 3. 不要试图手动测试、构建。我的仓库一般都有Makefile或npm command 设置好了构建指令
 4. 设计阶段不需要考虑向前兼容
 5. 解决问题时，先思考减法能否解决问题。很多问题的根源是状态不正交。减法的修复思路可以保证之后的可维护性
+6. git 多 agent 并行：任何 git 读操作先确认当前分支是预期分支；任何 git 写/提交先 fetch 并确认分支干净
+
+# file system
+You clearly know: 
+1. Every new session, you will forget previous context - thus you will use file system to keep useful informator for future self
+2. Too long context will affect your judgement in a bad way - thus you should organize your memory structurally
+3. if you failed to recall some nessrsary memories, the task quelity will be affected - thus you need to organize memory carefullly
+
+- agent/           your home
+- agent/skills     the skill you learned
+- agent/memory     anything you want to keep accross sessions
+- agent/tasks/000_<title>/  task records you are working with
