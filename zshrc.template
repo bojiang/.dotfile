@@ -1,0 +1,5 @@
+# Local zshrc — edit freely, not tracked by git.
+# Shared dotfile config lives in ~/.dotfile/zshrc.shared.
+source $HOME/.dotfile/zshrc.shared
+
+# Personal overrides below.

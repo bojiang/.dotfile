@@ -27,7 +27,7 @@ mkdir -p $HOME/.cache/vimundo
 mkdir -p $HOME/.config
 mkdir -p $HOME/.local/bin
 
-targets=".oh-my-zsh .zshrc .config/nvim .tmux .tmux.conf .profile .local/bin/docker-clean"
+targets=".oh-my-zsh .config/nvim .tmux .tmux.conf .profile .local/bin/docker-clean"
 
 for target in $targets; do
 	[ -e $HOME/$target -o -L $HOME/$target ] && mv $HOME/$target $BACKUP_DIR/$target
@@ -45,6 +45,9 @@ done
 ln -s $PWD/git/.gitignore $HOME/.gitignore
 ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 ln -s $PWD/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
+
+# .zshrc is a local file (not a symlink) so host-side edits don't pollute the template.
+cp $PWD/zshrc.template $HOME/.zshrc
 
 git submodule init
 git submodule update
