@@ -32,7 +32,9 @@ source $ZSH/oh-my-zsh.sh
 export SMART_SUGGESTION_DEBUG=true
 
 # ai tools
-alias cc="ANTHROPIC_API_KEY=sk-dummy ANTHROPIC_BASE_URL=http://localhost:4141 claude --dangerously-skip-permissions"
+export DISABLE_AUTOUPDATE=1
+alias ccp="ANTHROPIC_API_KEY=sk-dummy ANTHROPIC_BASE_URL=http://localhost:4141 claude --dangerously-skip-permissions"
+alias cc="claude --dangerously-skip-permissions --model 'claude-opus-4-6[1m]'"
 
 # docker
 alias dls="docker container list"
