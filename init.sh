@@ -26,6 +26,7 @@ mkdir -p $BACKUP_DIR/.local/bin
 mkdir -p $HOME/.cache/vimundo
 mkdir -p $HOME/.config
 mkdir -p $HOME/.local/bin
+mkdir -p $HOME/.claude
 
 targets=".oh-my-zsh .config/nvim .tmux .tmux.conf .profile .local/bin/docker-clean"
 
@@ -33,9 +34,9 @@ for target in $targets; do
 	[ -e $HOME/$target -o -L $HOME/$target ] && mv $HOME/$target $BACKUP_DIR/$target
 done
 
-[ -e $HOME/.gitignore ] && mv $HOME/.gitignore $BACKUP_DIR/git/.gitignore
-[ -e $HOME/.gitconfig ] && mv $HOME/.gitconfig $BACKUP_DIR/git/.gitconfig
-[ -e $HOME/.claude/CLAUDE.md ] && mv $HOME/.claude/CLAUDE.md $BACKUP_DIR/.claude/CLAUDE.md
+[ -e $HOME/.gitignore -o -L $HOME/.gitignore ] && mv $HOME/.gitignore $BACKUP_DIR/git/.gitignore
+[ -e $HOME/.gitconfig -o -L $HOME/.gitconfig ] && mv $HOME/.gitconfig $BACKUP_DIR/git/.gitconfig
+[ -e $HOME/.claude/CLAUDE.md -o -L $HOME/.claude/CLAUDE.md ] && mv $HOME/.claude/CLAUDE.md $BACKUP_DIR/.claude/CLAUDE.md
 
 
 for target in $targets; do
@@ -47,6 +48,7 @@ ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 ln -s $PWD/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 
 # .zshrc is a local file (not a symlink) so host-side edits don't pollute the template.
+[ -e $HOME/.zshrc -o -L $HOME/.zshrc ] && mv $HOME/.zshrc $BACKUP_DIR/.zshrc
 cp $PWD/zshrc.template $HOME/.zshrc
 
 git submodule init

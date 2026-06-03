@@ -4,3 +4,5 @@
 .eslintrc.js
 .bolt
 _refs/
+
+**/.claude/settings.local.json
