@@ -138,101 +138,6 @@ require("lazy").setup({
     },
 
     {
-      -- avante
-      "yetone/avante.nvim",
-      event = "VeryLazy",
-      lazy = false,
-      opts = {
-        debug = true,
-        hints = { enabled = false },
-        mappings = {
-          submit = {
-            normal = "<CR>",
-            insert = "<CR>",
-          },
-        },
-        -- provider = "claude",
-        -- provider = "openai",
-        provider = "gemini",
-        providers = {
-          claude = {
-            -- endpoint = "https://babeltower.pro",
-            model = "claude-sonnet-4-20250514",
-            timeout = 60000, -- Timeout in milliseconds
-            -- api_key_name = "BBT_API_KEY",
-          },
-          gemini = {
-            model = "gemini-2.5-pro", -- your desired model (or use gpt-4o, etc.)
-            timeout = 30000, -- timeout in milliseconds
-            api_key_name = "GEMINI_API_KEY",
-          },
-          openai = {
-            endpoint = "https://babeltower.pro/v1",
-            model = "gemini-2.5-pro:google", -- your desired model (or use gpt-4o, etc.)
-            timeout = 30000, -- timeout in milliseconds
-            api_key_name = "BBT_API_KEY",
-          },
-          groq = { -- define groq provider
-              __inherited_from = 'openai',
-              api_key_name = 'GROQ_API_KEY',
-              endpoint = 'https://api.groq.com/openai/v1/',
-              model = 'llama-3.3-70b-versatile',
-              max_tokens = 8192, -- remember to increase this value, otherwise it will stop generating halfway
-          },
-        },
-        disabled_tools = { "python" },
-        -- history = {
-        --   max_tokens = 0,
-        -- },
-        cursor_applying_provider = 'groq',
-        behaviour = {
-          enable_cursor_planning_mode = false,
-          auto_apply_diff_after_generation = true,
-          enable_claude_text_editor_tool_mode = true,
-        },
-        vendors = {
-        --- ... existing vendors
-        },
-      },
-      -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
-      -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.
-      build = ":AvanteBuild",
-      dependencies = {
-        "stevearc/dressing.nvim",
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-        --- The below dependencies are optional,
-        "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-        "zbirenbaum/copilot.lua",      -- for providers='copilot'
-        {
-          -- support for image pasting
-          "HakonHarnes/img-clip.nvim",
-          event = "VeryLazy",
-          opts = {
-            -- recommended settings
-            default = {
-              embed_image_as_base64 = false,
-              prompt_for_file_name = false,
-              drag_and_drop = {
-                insert_mode = true,
-              },
-              -- required for Windows users
-              -- use_absolute_path = true,
-            },
-          },
-        },
-        {
-          -- Make sure to setup it properly if you have lazy=true
-          'MeanderingProgrammer/render-markdown.nvim',
-          opts = {
-            file_types = { "markdown", "Avante" },
-          },
-          ft = { "markdown", "Avante" },
-        },
-      },
-    },
-
-    {
       -- vscode theme
       "Mofiqul/vscode.nvim",
       commit = "7331e8316d558e9b3f63b066e98029704f281e91",
@@ -261,6 +166,47 @@ require("lazy").setup({
             ["*"] = true,
           }
         })
+      end,
+    },
+
+    {
+      -- lsp completion
+      "hrsh7th/nvim-cmp",
+      dependencies = {
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
+      },
+      config = function()
+        local cmp = require('cmp')
+        cmp.setup({
+          mapping = cmp.mapping.preset.insert({
+            ['<Down>'] = cmp.mapping.select_next_item(),
+            ['<Up>'] = cmp.mapping.select_prev_item(),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            ['<C-e>'] = cmp.mapping.abort(),
+          }),
+          sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'path' },
+          }, {
+            { name = 'buffer' },
+          }),
+        })
+      end,
+    },
+
+    { -- lsp progress indicator
+      "j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup()
+      end,
+    },
+
+    { -- diagnostics list
+      "folke/trouble.nvim",
+      config = function()
+        require("trouble").setup()
       end,
     },
   },
@@ -298,9 +244,6 @@ end, { noremap = true })
 
 vim.keymap.set('n', '<C-e>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
-vim.keymap.set('n', '<leader><Space>', ':AvanteAsk<CR>', { silent = true })
-vim.keymap.set('v', '<leader><Space>', require('avante.api').edit, { silent = true })
-
 vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true })
@@ -313,3 +256,5 @@ vim.keymap.set('i', '<C-k>', '<up>', { silent = true })
 
 vim.keymap.set('n', '<C-j>d', vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set('n', '<C-j>r', vim.lsp.buf.references, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-j>n', vim.diagnostic.goto_next, { noremap = true, silent = true })
+vim.keymap.set('n', '<C-j>p', vim.diagnostic.goto_prev, { noremap = true, silent = true })
