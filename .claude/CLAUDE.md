@@ -17,6 +17,7 @@
 4. 设计阶段不需要考虑向前兼容
 5. 解决问题时，先思考减法能否解决问题。很多问题的根源是状态不正交。减法的修复思路可以保证之后的可维护性
 6. git 多 agent 并行：任何 git 读操作先确认当前分支是预期分支；任何 git 写/提交先 fetch 并确认分支干净
+7. worktree 隔离：所有代码修改必须在独立 git worktree 中进行，完成后清理。多个并行 Claude Code 实例可能操作同一 repo，直接在主 worktree 修改会冲突
 
 # file system
 You clearly know: 
