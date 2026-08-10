@@ -21,6 +21,7 @@ BACKUP_DIR=$PWD/backup/$(date +"%Y%m%d_%H%M%S")
 mkdir -p $BACKUP_DIR/git
 mkdir -p $BACKUP_DIR/.config
 mkdir -p $BACKUP_DIR/.claude
+mkdir -p $BACKUP_DIR/.claude/hooks
 mkdir -p $BACKUP_DIR/.local/bin
 
 mkdir -p $HOME/.cache/vimundo
@@ -46,6 +47,8 @@ done
 ln -s $PWD/git/.gitignore $HOME/.gitignore
 ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 ln -s $PWD/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
+[ -e $HOME/.claude/hooks -o -L $HOME/.claude/hooks ] && mv $HOME/.claude/hooks $BACKUP_DIR/.claude/hooks
+ln -s $PWD/.claude/hooks $HOME/.claude/hooks
 
 # .zshrc is a local file (not a symlink) so host-side edits don't pollute the template.
 [ -e $HOME/.zshrc -o -L $HOME/.zshrc ] && mv $HOME/.zshrc $BACKUP_DIR/.zshrc

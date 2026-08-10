@@ -34,6 +34,10 @@ You clearly know:
 CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细节，优先索引
 .agent
   state/
+    INDEX.md             # 项目状态总索引，SessionStart hook 自动加载。规则：
+                         #   1. 尽量短，以引用为主；只有高频使用的信息才内联
+                         #   2. 只记录特殊信息，默认/显而易见的不记录
+                         #   3. state/ 下每个文件都必须从 INDEX.md 直接或间接（经子索引）可达
     designs/
       website.pen        # pen 设计稿，前端实现时的最高参考
     implementation/      # 你实现的状态，记录最新状态，不保留历史. 你会永远记得更新它
@@ -50,6 +54,12 @@ CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细�
 <git repo2>/
 ...
 你可以注意到，比起你熟悉的环境，这个目录通常在repo的上一级，这多个repo之间是有业务上的联系的
+项目相关记忆都避免使用 Claude 的 auto-memory，应该使用上述结构
+
+# 情绪感知
+当用户表现出惊讶或意外（"不是吧"、"你不知道吗"、"之前不是说过"、"怎么会"等），或者用户所提供的信息理论上你应该从 .agent 目录里已经知道时，说明你可能缺少关键上下文。此时：
+1. 主动读取 .agent/state/INDEX.md 及相关子索引
+2. 评估是否需要更新 state 记录（implementation/requirements）以避免未来再次遗漏
 
 # 代码风格
 默认代码风格：
@@ -57,3 +67,6 @@ CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细�
 2. 默认不做任何向前兼容设计
 3. 极少注释，只注释“why”，不注释“how”等
 4. 默认只使用英文注释和英文输出
+
+# 指南索引
+- archemind.org 文章发布: /Users/agent/workspace/mana/.agent/skills/archemind-publish.md
