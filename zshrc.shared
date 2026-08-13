@@ -35,6 +35,7 @@ export SMART_SUGGESTION_DEBUG=true
 export DISABLE_AUTOUPDATE=1
 alias ccp="ANTHROPIC_API_KEY=sk-dummy ANTHROPIC_BASE_URL=http://localhost:4141 claude --dangerously-skip-permissions"
 alias cc="claude --dangerously-skip-permissions --model 'claude-opus-4-6[1m]'"
+alias ccf="claude --dangerously-skip-permissions --model 'claude-fable-5'"
 
 # docker
 alias dls="docker container list"
