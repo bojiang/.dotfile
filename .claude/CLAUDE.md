@@ -19,17 +19,6 @@
 6. git 多 agent 并行：任何 git 读操作先确认当前分支是预期分支；任何 git 写/提交先 fetch 并确认分支干净
 7. worktree 隔离：所有代码修改必须在独立 git worktree 中进行，完成后清理。多个并行 Claude Code 实例可能操作同一 repo，直接在主 worktree 修改会冲突
 
-# file system
-You clearly know: 
-1. Every new session, you will forget previous context - thus you will use file system to keep useful informator for future self
-2. Too long context will affect your judgement in a bad way - thus you should organize your memory structurally
-3. if you failed to recall some nessrsary memories, the backlog quelity will be affected - thus you need to organize memory carefullly
-
-- agent/           your home
-- agent/skills     the skill you learned
-- agent/memory     anything you want to keep accross sessions
-- agent/backlogs/000_<title>/  backlog records you are working with
-
 # 目录
 你所处的目录遵守以下约定：
 CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细节，优先索引
@@ -39,14 +28,16 @@ CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细�
                          #   1. 尽量短，以引用为主；只有高频使用的信息才内联
                          #   2. 只记录特殊信息，默认/显而易见的不记录
                          #   3. state/ 下每个文件都必须从 INDEX.md 直接或间接（经子索引）可达
-    designs/
-      website.pen        # pen 设计稿，前端实现时的最高参考
-    implementation/      # 你实现的状态，记录最新状态，不保留历史. 你会永远记得更新它
-      INDEX.md           # 设计实现细节的索引
-      ...                # 其他设计实现细节文档
-    requirements/        # 你对用户需求的理解，来源：用户提示和你的分析. 你会永远记得更新它
-      INDEX.md           # 需求细节的索引
-      ...                # 其他需求细节文档
+    <topic>/             # 话题优先分层：每个话题一个目录，话题内再按类分子目录，按需存在
+      requirements/      # 该话题的需求/意图，来源：用户提示和你的分析
+        INDEX.md         # 需求细节的索引
+        ...              # 其他需求细节文档
+      design/            # 该话题的设计与取舍；设计稿（如 website.pen）也放这里
+        INDEX.md
+        ...
+      implementation/    # 该话题的实现现状，只记最新，不保留历史
+        INDEX.md         # 实现细节的索引
+        ...              # 其他实现细节文档
   backlogs/              # 任务记录. 你不会把它当做当前的ground truth
     001_<name>/
       INDEX.md           # 任务细节的索引
@@ -56,6 +47,8 @@ CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细�
 ...
 你可以注意到，比起你熟悉的环境，这个目录通常在repo的上一级，这多个repo之间是有业务上的联系的
 项目相关记忆都避免使用 Claude 的 auto-memory，应该使用上述结构
+任务收尾时你判断：本轮是否产生了"花了成本得到、且之后稳定成立"的结论？有 → 派 state-keeper subagent 写入，交接格式固定为（结论 / why / 涉及文件）；无 → 直接结束
+你不直接读写 state/ 细节文件——读旧状态、去重合并、维护索引都在 state-keeper 的子上下文里发生，保持主上下文短
 
 # 情绪感知
 当用户表现出惊讶或意外（"不是吧"、"你不知道吗"、"之前不是说过"、"怎么会"等），或者用户所提供的信息理论上你应该从 .agent 目录里已经知道时，说明你可能缺少关键上下文。此时：

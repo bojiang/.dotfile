@@ -49,6 +49,8 @@ ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 ln -s $PWD/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 [ -e $HOME/.claude/hooks -o -L $HOME/.claude/hooks ] && mv $HOME/.claude/hooks $BACKUP_DIR/.claude/hooks
 ln -s $PWD/.claude/hooks $HOME/.claude/hooks
+[ -e $HOME/.claude/agents -o -L $HOME/.claude/agents ] && mv $HOME/.claude/agents $BACKUP_DIR/.claude/agents
+ln -s $PWD/.claude/agents $HOME/.claude/agents
 
 # .zshrc is a local file (not a symlink) so host-side edits don't pollute the template.
 [ -e $HOME/.zshrc -o -L $HOME/.zshrc ] && mv $HOME/.zshrc $BACKUP_DIR/.zshrc
