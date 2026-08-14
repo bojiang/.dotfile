@@ -10,4 +10,4 @@ the ceiling is "forced one-time judgment".
 - External cheap-model judge (haiku via `claude -p`): the main model is the only party holding full turn context.
 - Main-model self-discipline via CLAUDE.md prose alone: the original failure this design replaces.
 
-Current mechanism and file map: see [../implementation/mechanism.md](../implementation/mechanism.md).
+Current mechanism and file map: see [mechanism.md](mechanism.md).

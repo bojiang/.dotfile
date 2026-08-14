@@ -51,6 +51,8 @@ ln -s $PWD/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 ln -s $PWD/.claude/hooks $HOME/.claude/hooks
 [ -e $HOME/.claude/agents -o -L $HOME/.claude/agents ] && mv $HOME/.claude/agents $BACKUP_DIR/.claude/agents
 ln -s $PWD/.claude/agents $HOME/.claude/agents
+[ -e $HOME/.claude/settings.json -o -L $HOME/.claude/settings.json ] && mv $HOME/.claude/settings.json $BACKUP_DIR/.claude/settings.json
+ln -s $PWD/.claude/settings.json $HOME/.claude/settings.json
 
 # .zshrc is a local file (not a symlink) so host-side edits don't pollute the template.
 [ -e $HOME/.zshrc -o -L $HOME/.zshrc ] && mv $HOME/.zshrc $BACKUP_DIR/.zshrc

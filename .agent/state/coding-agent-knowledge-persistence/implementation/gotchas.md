@@ -11,6 +11,8 @@ Applied in: .claude/hooks/enforce-state-write.sh, .claude/hooks/session-load-con
 Hook registration in ~/.claude/settings.json and the ~/.claude/hooks symlink can
 silently drift from what backlog records claim (backlog 001 recorded wiring that
 was absent on this machine). Always verify the actual files/symlinks.
+Root cause now addressed: settings.json is version-managed in the repo and
+symlinked into ~/.claude by init.sh — but keep verifying on disk.
 
 ## Reload semantics
 - settings.json hook changes take effect immediately in the running session.
