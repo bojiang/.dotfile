@@ -16,6 +16,7 @@ Encoded in .claude/CLAUDE.md (`# 目录` section) and .claude/agents/state-keepe
 
 ## Files
 - .claude/hooks/enforce-state-write.sh — the fuse
+- .claude/hooks/session-load-context.sh — SessionStart auto-load of state/INDEX.md (cwd-only, correct by design: `.agent` lives at $CWD per user 2026-08-14; the fuse/state-keeper walking parents is the deviation — see known-gaps.md)
 - .claude/agents/state-keeper.md — the writer subagent (holds the kind routing rule)
 - .claude/CLAUDE.md — `# 目录` section, last 3 lines (avoid auto-memory; use .agent structure)
 - .claude/settings.json — hook registration, version-managed in repo; hook commands use $HOME-based paths (repo is public, shared across macOS/Linux — no /opt/homebrew or /Users/bjiang absolutes)
