@@ -29,9 +29,16 @@ Verification loop — fix implementation / spec / tests, until all obligations g
 
 Every artifact traces to its source. Source changes → downstream regenerates.
 
-The two derivation branches are independent by design: **tests are never written
-from the implementation, and the implementation never reads the tests.** The
-spec is their only shared parent — that is what makes a green run meaningful.
+Two invariants hold everywhere in the pipeline:
+
+1. **Independent derivation** — tests are never written from the
+   implementation, and the implementation never reads the tests. The spec is
+   their only shared parent; that is what makes a green run meaningful.
+2. **The spec is the only asset** — everything derived from it (implementation
+   units, test bodies) is a consumable: cheap to regenerate, never worth
+   preserving for its own sake. The existence of derived code is not a reason
+   to keep it. When in doubt between patching a derived artifact and
+   re-deriving it from the spec, re-derive (see Rework gate).
 
 ## Stage 0 — Ideation
 
@@ -126,24 +133,63 @@ Mechanical derivation, then agent completion:
    produces the failure paths.
 2. The agent implements skeleton bodies **from the spec text only** — the
    obligation's description and its source rule. Never from the implementation.
-3. Existing implemented tests are not overwritten on regeneration (manual
-   merge); `--diff` shows which obligations changed.
+3. Regeneration does not overwrite implemented test bodies; `--diff` shows
+   which obligations changed. Bodies of added/modified obligations are deleted
+   and re-derived (see Rework gate); untouched obligations keep theirs.
 
 ## Stage 3 — Verification loop
 
-Run the derived tests against the implementation. Triage every failure into
-exactly one of three buckets:
-
-- **Implementation bug** — the spec and test agree, the code doesn't. Fix the
-  code. (The common case; the loop stays in this stage.)
-- **Spec bug** — the failure reveals a contradiction or a wrong story. Go back
-  to Stage 1 (`allium:tend` + contradiction gate), then re-derive both
-  branches.
-- **Test misreads the spec** — the test asserts something the spec doesn't
-  say. Fix the test against the spec text; the implementation is not evidence.
+Run the derived tests against the implementation. Every failure passes through
+the rework gate below: first decide which stage to return to, then decide
+rewrite vs modify. Read the rework log before triaging, and record every patch
+attempt in it before touching code.
 
 **Convergence criterion**: every E2E-relevant obligation's test passes. The
 coverage table (`plan_to_tests.py --readme`) is the progress report.
+
+## Rework gate
+
+The failure mode this gate exists to block: patching the current state forever
+because it already exists, and never escaping its framing. Two questions,
+answered in order, for every failure.
+
+### Question 1 — return to which stage?
+
+- **Implementation bug** — spec and test agree, the code doesn't. Stay in
+  Stage 3; fix the implementation, subject to Question 2. (The common case.)
+- **Test misreads the spec** — the test asserts something the spec doesn't
+  say. Rewrite the test body from the spec text; the implementation is not
+  evidence.
+- **Spec bug** — return to Stage 1 (`allium:tend` + contradiction gate), then
+  re-derive. Mandatory signals — any one of these means Stage 1, and absorbing
+  them inside Stage 2/3 is forbidden:
+  - the implementation and a test each look correct in isolation but
+    contradict each other
+  - an obligation cannot be satisfied without breaking another
+  - the fix would require a concept the spec does not contain
+
+### Question 2 — rewrite or modify?
+
+Default is **rewrite**. Patching is the exception, allowed only when the fix
+is local to the single failing obligation and touches no interface, no shared
+state, and no other obligation's artifact.
+
+- **Fuse**: the same obligation still failing after 2 patch attempts → patching
+  is no longer allowed. Delete the implementation unit and re-derive it from
+  the spec text alone, without reading the old implementation — the point is
+  to escape its framing, not to reproduce it.
+- **After a spec rework**: every obligation `plan_to_tests.py --diff` reports
+  as added or modified gets its test body AND implementation unit deleted and
+  re-derived. No merging old into new. Obligations the diff does not touch
+  keep their artifacts.
+
+### Rework log
+
+The loop maintains `.rework_log.json` in the tests dir: one entry per
+obligation — patch attempt count and rework events (stage returned to, rewrite
+or patch). The count resets when the obligation's test passes or its manifest
+hash changes. The fuse is checked against this file, never against memory of
+the conversation; every triage starts by reading it.
 
 ## Scripts
 
