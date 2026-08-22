@@ -1,0 +1,22 @@
+[project]
+name = "autonomous-qa"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "pytest>=8.0",
+    "httpx>=0.27",
+    "playwright>=1.40",
+]
+
+[tool.uv]
+# Dependency-only project: tests run in place via pytest, nothing imports
+# this as an installed package.
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+markers = [
+    "seconds: expected wall-clock in seconds (default lane)",
+    "minutes: out-of-band pipeline assertions, minutes-scale polling",
+    "hours: temporal obligations, deadline-driven",
+]

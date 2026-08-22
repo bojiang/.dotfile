@@ -1,0 +1,20 @@
+{
+  "spec": "specs/user-journey/core.allium",
+  "tests_dir": "tests/autonomous-qa",
+  "layers": {
+    "default": "api",
+    "surfaces": "browser",
+    "rules": {
+      "ExampleApiRule": "api",
+      "ExampleBrowserRule": "browser"
+    },
+    "entities": {
+      "ExampleEntity": "api"
+    }
+  },
+  "tiers": {
+    "entities": {
+      "ExampleAsyncEntity": "minutes"
+    }
+  }
+}
