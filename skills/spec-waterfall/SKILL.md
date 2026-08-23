@@ -54,6 +54,17 @@ Turn intent into spec:
   definition so the spec stays one coherent model. If the source contradicts
   the current spec, surface the contradiction to the user before continuing.
 
+The ideation conversation itself runs at user altitude. Everything produced at
+this stage — use-case notes, requirement analysis, discussion of directions —
+speaks in actors, observable events, runtime-environment constraints, and
+experience promises. When the product owner names a mechanism (a protocol, a
+transport, a storage choice), the AI's job is to translate it upward into the
+observable use case behind it and continue the discussion at that altitude;
+the use-case record keeps the translation, and the mechanism choice waits for
+Stage 2. Example: "webhooks won't work, websocket is probably enough" records
+as "the agent runs behind NAT and may sleep; it must receive wakeups while
+reachable and catch up via cursor after waking" — the transport stays open.
+
 When the source is **code**, do not hand code facts to the spec directly — code
 is the source most likely to smuggle implementation detail into the model.
 First translate each fact into user-observable behavior, then apply the
@@ -89,7 +100,13 @@ and only when they explain user-perceivable timing or consistency (e.g. "a
 balance change takes minutes to affect API 401s"); pure mechanism inventory
 belongs in backlog notes, not the spec.
 
-Litmus tests, applied to every new field / `requires` / `ensures`:
+The rule governs every output upstream of Stage 2 — ideation notes,
+requirement records, spec text, and the AI's own analysis in conversation
+alike. Mechanism vocabulary appearing in any of them is the violation signal,
+wherever it came from.
+
+Litmus tests, applied to every noun in any upstream output — spec fields,
+`requires` / `ensures` clauses, and use-case notes alike:
 
 - **Rename test**: if the internal component were renamed or replaced, would
   the user see anything change? No → it is implementation; keep it out.

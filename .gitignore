@@ -8,3 +8,4 @@ backup/
 Dockerfile
 docker-compose.yml
 .gitignore
+__pycache__/

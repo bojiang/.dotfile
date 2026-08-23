@@ -17,12 +17,11 @@
 4. 设计阶段不需要考虑向前兼容
 5. 解决问题时，先思考减法能否解决问题。很多问题的根源是状态不正交。减法的修复思路可以保证之后的可维护性
 6. git 多 agent 并行：任何 git 读操作先确认当前分支是预期分支；任何 git 写/提交先 fetch 并确认分支干净
-7. worktree 隔离：所有代码修改必须在独立 git worktree 中进行，路径统一放 `.worktrees/<name>`；PR merged / 分支废弃后立即 `git worktree remove`。多个并行 Claude Code 实例可能操作同一 repo，直接在主 worktree 修改会冲突
-8. 任务完成定义：改动已合回主分支且 worktree 已清理，才算完成。改动还在 worktree 里不能报告完成
+7. worktree 隔离：代码修改必须在独立 git worktree 中进行（知识修改原地修改即可），路径统一放 `.worktrees/<name>`；每波次修改后提交commit合入main，不在 worktree 停留
 
 # 目录
 你所处的目录遵守以下约定：
-CLAUDE.md     # 最高SOP，每次进入项目时都读取, 里面不包含细节，优先索引
+AGENT.md     # 最高SOP，每次进入项目时都读取, 里面不包含细节，优先索引
 .agent
   state/
     INDEX.md             # 项目状态总索引，SessionStart hook 自动加载。规则：
