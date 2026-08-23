@@ -230,7 +230,7 @@ location with `--config`). All paths are relative to the config file:
 - `layers.default` — layer for obligations nothing else claims
 - `layers.surfaces` — layer for surface obligations
 - `layers.rules` / `layers.entities` — map rule/entity names to a layer; every
-  distinct layer name gets its own `test_gen_<layer>.py`
+  obligation group gets a small `test_gen_<layer>_<group>.py` file
 - `tiers.entities` — map entities materialized by out-of-band pipelines to
   `minutes` (temporal obligations are `hours` automatically)
 

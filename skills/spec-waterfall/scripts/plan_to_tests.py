@@ -12,11 +12,13 @@ Usage:
     plan_to_tests.py --diff                        # show what changed vs existing
     plan_to_tests.py --readme                      # refresh README coverage block only
 """
+import ast
 import hashlib
 import json
 import subprocess
 import sys
 import re
+import textwrap
 from pathlib import Path
 from collections import defaultdict
 
@@ -115,27 +117,27 @@ def obligation_to_test_body(ob: dict) -> str:
     """Generate test body based on category."""
     cat = ob["category"]
     if cat == "rule_success":
-        return "    # TODO: set up preconditions, invoke action, assert postconditions\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: set up preconditions, invoke action, assert postconditions\npytest.skip('skeleton — needs implementation')"
     elif cat == "rule_failure":
-        return "    # TODO: violate one requires clause, assert rejection\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: violate one requires clause, assert rejection\npytest.skip('skeleton — needs implementation')"
     elif cat == "transition_edge":
-        return "    # TODO: put entity in source state, trigger transition, assert target state\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: put entity in source state, trigger transition, assert target state\npytest.skip('skeleton — needs implementation')"
     elif cat == "transition_rejected":
-        return "    # TODO: attempt undeclared transition, assert rejection\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: attempt undeclared transition, assert rejection\npytest.skip('skeleton — needs implementation')"
     elif cat == "transition_terminal":
-        return "    # TODO: put entity in terminal state, assert no outbound transitions possible\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: put entity in terminal state, assert no outbound transitions possible\npytest.skip('skeleton — needs implementation')"
     elif cat in ("when_presence", "when_clear"):
-        return "    # TODO: put entity in qualifying state, assert field present/absent\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: put entity in qualifying state, assert field present/absent\npytest.skip('skeleton — needs implementation')"
     elif cat == "invariant":
-        return "    # TODO: set up state, apply rules, assert invariant holds\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: set up state, apply rules, assert invariant holds\npytest.skip('skeleton — needs implementation')"
     elif cat == "temporal":
-        return "    # TODO: advance past deadline, assert rule fires\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: advance past deadline, assert rule fires\npytest.skip('skeleton — needs implementation')"
     elif cat == "surface_provides":
-        return "    # TODO: verify operation available when guard true, hidden when false\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: verify operation available when guard true, hidden when false\npytest.skip('skeleton — needs implementation')"
     elif cat == "surface_exposure":
-        return "    # TODO: verify each exposed field is accessible\n    pytest.skip('skeleton — needs implementation')"
+        return "# TODO: verify each exposed field is accessible\npytest.skip('skeleton — needs implementation')"
     else:
-        return "    pytest.skip('skeleton — needs implementation')"
+        return "pytest.skip('skeleton — needs implementation')"
 
 
 def obligation_hash(ob: dict) -> str:
@@ -192,7 +194,8 @@ Spec-driven E2E suite. Test skeletons are generated from
 
 ## Layout
 
-- `test_gen_<layer>.py` — generated skeletons, one test per obligation.
+- `test_gen_<layer>_<group>.py` — generated skeletons, one small file per
+  obligation group and one test per obligation.
   Implement the TODO body, remove the `pytest.skip`, keep the function name
   (it is the obligation link).
 - Other `test_*.py` — handwritten tests, not tracked by the coverage table
@@ -267,12 +270,21 @@ def parse_test_status(path: Path) -> dict:
     return status
 
 
+def generated_test_paths(tests_dir: Path) -> list[Path]:
+    """Return only files owned by this generator."""
+    paths = []
+    for path in sorted(tests_dir.glob("test_gen_*.py")):
+        if "Auto-generated test skeletons from Allium spec obligations." in path.read_text()[:500]:
+            paths.append(path)
+    return paths
+
+
 def build_readme_block(all_obs: list, e2e_obs: list, cfg: dict) -> str:
     """Render the generated coverage block (markers included)."""
     sections = spec_sections(cfg["spec"].read_text())
     test_status = {}
-    for layer in cfg["layer_names"]:
-        test_status.update(parse_test_status(cfg["tests_dir"] / f"test_gen_{layer}.py"))
+    for path in generated_test_paths(cfg["tests_dir"]):
+        test_status.update(parse_test_status(path))
 
     rows = {}
     for ob in e2e_obs:
@@ -330,12 +342,101 @@ def write_readme(block: str, cfg: dict):
     print(f"Wrote {readme_path}")
 
 
-def generate_test_file(layer: str, obligations: list, cfg: dict) -> str:
-    """Generate a complete test file for a set of obligations."""
+def obligation_group(ob: dict) -> str:
+    parts = ob["id"].split(".")
+    return parts[1] if len(parts) > 1 else parts[0]
+
+
+def snake_name(value: str) -> str:
+    value = re.sub(r"([A-Z])", r"_\1", value).lower().strip("_")
+    value = re.sub(r"[^a-z0-9]+", "_", value)
+    return re.sub(r"_+", "_", value).strip("_")
+
+
+def class_name(group: str) -> str:
+    words = re.split(r"[_\-\s]+", group)
+    return "Test" + "".join(word[:1].upper() + word[1:] for word in words if word)
+
+
+def generated_test_filename(layer: str, group: str) -> str:
+    return f"test_gen_{snake_name(layer)}_{snake_name(group)}.py"
+
+
+def _indent(text: str, spaces: int) -> list[str]:
+    prefix = " " * spaces
+    return [prefix + line if line else "" for line in text.splitlines()]
+
+
+def _is_tier_decorator(source: str) -> bool:
+    return source in {f"pytest.mark.{tier}" for tier in TIERS}
+
+
+def load_preserved_tests(tests_dir: Path) -> dict:
+    """Read editable function details without retaining generated mapping text."""
+    preserved = {}
+    for path in generated_test_paths(tests_dir):
+        source = path.read_text()
+        lines = source.splitlines()
+        tree = ast.parse(source, filename=str(path))
+        nodes = [
+            node
+            for container in tree.body
+            if isinstance(container, ast.ClassDef)
+            for node in container.body
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        ]
+        for node in nodes:
+            if not node.name.startswith("test_") or not node.body or node.end_lineno is None:
+                continue
+            first = node.body[0]
+            is_docstring = (
+                isinstance(first, ast.Expr)
+                and isinstance(first.value, ast.Constant)
+                and isinstance(first.value.value, str)
+            )
+            body_start = first.end_lineno if is_docstring else first.lineno - 1
+            header = textwrap.dedent(
+                "\n".join(lines[node.lineno - 1:first.lineno - 1])
+            ).rstrip()
+            body = textwrap.dedent(
+                "\n".join(lines[body_start:node.end_lineno])
+            ).rstrip()
+            decorators = []
+            for decorator in node.decorator_list:
+                decorator_source = ast.get_source_segment(source, decorator)
+                if decorator_source and not _is_tier_decorator(decorator_source):
+                    decorators.append(decorator_source)
+            if node.name in preserved:
+                sys.exit(f"Duplicate generated test function: {node.name}")
+            preserved[node.name] = {
+                "header": header,
+                "body": body,
+                "decorators": decorators,
+            }
+    return preserved
+
+
+def preservable_tests(old_manifest: dict, new_manifest: dict, existing: dict) -> dict:
+    return {
+        name: existing[name]
+        for name in existing.keys() & old_manifest.keys() & new_manifest.keys()
+        if old_manifest[name].get("hash") == new_manifest[name].get("hash")
+    }
+
+
+def generate_test_file(
+    layer: str,
+    group: str,
+    obligations: list,
+    cfg: dict,
+    preserved: dict,
+) -> str:
+    """Generate one small test file for one obligation group."""
     lines = [
         f'"""',
         f'Auto-generated test skeletons from Allium spec obligations.',
         f'Layer: {layer}',
+        f'Group: {group}',
         f'Generated by plan_to_tests.py — do not edit obligation mapping manually.',
         f'Implement the TODO bodies, then remove the pytest.skip().',
         f'"""',
@@ -343,35 +444,44 @@ def generate_test_file(layer: str, obligations: list, cfg: dict) -> str:
         f'',
     ]
 
-    # Group by rule/entity
-    groups = defaultdict(list)
+    lines.append("")
+    lines.append(f"class {class_name(group)}:")
     for ob in obligations:
-        # Extract group name from obligation id
-        parts = ob["id"].split(".")
-        group = parts[1] if len(parts) > 1 else parts[0]
-        groups[group].append(ob)
-
-    for group_name, obs in groups.items():
-        # Capitalize word starts without lowercasing the rest ("ApiKey" -> "TestApiKey",
-        # not str.title()'s "TestApikey").
-        words = re.split(r"[_\-\s]+", group_name)
-        class_name = "Test" + "".join(w[:1].upper() + w[1:] for w in words if w)
-        lines.append(f"")
-        lines.append(f"class {class_name}:")
-        for ob in obs:
-            test_name = obligation_to_test_name(ob)
-            docstring = obligation_to_docstring(ob)
-            body = obligation_to_test_body(ob)
-            lines.append(f"")
-            lines.append(f"    @pytest.mark.{obligation_tier(ob, cfg)}")
-            lines.append(f"    def {test_name}(self):")
-            lines.append(f"        {docstring}")
-            # Body templates carry a 4-space indent; add 4 more to sit inside
-            # the method (class 4 + def body 8).
-            for body_line in body.splitlines():
-                lines.append(f"    {body_line}")
+        test_name = obligation_to_test_name(ob)
+        prior = preserved.get(test_name, {})
+        header = prior.get("header") or f"def {test_name}(self):"
+        body = prior.get("body") or obligation_to_test_body(ob)
+        lines.append("")
+        for decorator in prior.get("decorators", []):
+            lines.extend(_indent(f"@{decorator}", 4))
+        lines.append(f"    @pytest.mark.{obligation_tier(ob, cfg)}")
+        lines.extend(_indent(header, 4))
+        lines.append(f"        {obligation_to_docstring(ob)}")
+        lines.extend(_indent(body, 8))
 
     return "\n".join(lines) + "\n"
+
+
+def build_test_outputs(e2e_obs: list, cfg: dict, preserved: dict) -> dict[Path, str]:
+    grouped = defaultdict(list)
+    for ob in e2e_obs:
+        grouped[(obligation_layer(ob, cfg), obligation_group(ob))].append(ob)
+    outputs = {}
+    for (layer, group), obligations in grouped.items():
+        path = cfg["tests_dir"] / generated_test_filename(layer, group)
+        if path in outputs:
+            sys.exit(f"Generated test filename collision: {path.name}")
+        outputs[path] = generate_test_file(layer, group, obligations, cfg, preserved)
+    return outputs
+
+
+def write_test_outputs(tests_dir: Path, outputs: dict[Path, str]) -> list[Path]:
+    stale = set(generated_test_paths(tests_dir)) - outputs.keys()
+    for path, content in outputs.items():
+        path.write_text(content)
+    for path in stale:
+        path.unlink()
+    return sorted(stale)
 
 
 def main():
@@ -418,26 +528,26 @@ def main():
         print(f"  {tier}: {tiers[tier]}")
     print()
 
-    contents = {
-        layer: generate_test_file(layer, by_layer[layer], cfg)
-        for layer in cfg["layer_names"]
-    }
+    new_manifest = build_manifest(e2e_obs)
 
     if write_mode:
         cfg["tests_dir"].mkdir(parents=True, exist_ok=True)
-        for layer, content in contents.items():
-            path = cfg["tests_dir"] / f"test_gen_{layer}.py"
-            path.write_text(content)
-            print(f"Wrote {path} ({len(by_layer[layer])} obligations)")
-        manifest_path.write_text(json.dumps(build_manifest(e2e_obs), indent=2) + "\n")
+        old_manifest = load_manifest(manifest_path)
+        existing = load_preserved_tests(cfg["tests_dir"])
+        preserved = preservable_tests(old_manifest, new_manifest, existing)
+        outputs = build_test_outputs(e2e_obs, cfg, preserved)
+        stale = write_test_outputs(cfg["tests_dir"], outputs)
+        manifest_path.write_text(json.dumps(new_manifest, indent=2) + "\n")
+        print(
+            f"Wrote {len(outputs)} generated test files for {len(e2e_obs)} obligations; "
+            f"preserved {len(preserved)} bodies; removed {len(stale)} stale files"
+        )
         print(f"Wrote {manifest_path}")
         write_readme(build_readme_block(all_obs, e2e_obs, cfg), cfg)
     elif readme_mode:
         write_readme(build_readme_block(all_obs, e2e_obs, cfg), cfg)
     elif diff_mode:
         old_manifest = load_manifest(manifest_path)
-        new_manifest = build_manifest(e2e_obs)
-
         old_names = set(old_manifest.keys())
         new_names = set(new_manifest.keys())
         added = new_names - old_names
@@ -464,10 +574,9 @@ def main():
             print(f"\n  {len(added)} added, {len(modified)} modified, {len(removed)} removed")
     else:
         # Print summary only
+        outputs = build_test_outputs(e2e_obs, cfg, {})
         print("Would generate:")
-        for layer, content in contents.items():
-            count = len(re.findall(r'def (test_\w+)', content))
-            print(f"  test_gen_{layer}.py: {count} test functions")
+        print(f"  {len(outputs)} grouped test files: {len(e2e_obs)} test functions")
         print()
         print("Run with --write to generate files, --diff to compare with existing.")
 
