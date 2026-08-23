@@ -37,6 +37,7 @@ E2E_CATEGORIES = {
     "temporal",
     "surface_provides",
     "surface_exposure",
+    "surface_guarantee",
 }
 
 TIERS = ("seconds", "minutes", "hours")
@@ -136,6 +137,8 @@ def obligation_to_test_body(ob: dict) -> str:
         return "# TODO: verify operation available when guard true, hidden when false\npytest.skip('skeleton — needs implementation')"
     elif cat == "surface_exposure":
         return "# TODO: verify each exposed field is accessible\npytest.skip('skeleton — needs implementation')"
+    elif cat == "surface_guarantee":
+        return "# TODO: exercise the surface and verify the observable guarantee\npytest.skip('skeleton — needs implementation')"
     else:
         return "pytest.skip('skeleton — needs implementation')"
 
@@ -344,7 +347,30 @@ def write_readme(block: str, cfg: dict):
 
 def obligation_group(ob: dict) -> str:
     parts = ob["id"].split(".")
+    if ob["category"] == "surface_guarantee":
+        if len(parts) < 3:
+            sys.exit(
+                f"Surface guarantee obligation ID must identify surface and guarantee: {ob['id']}"
+            )
+        return f"{parts[1]}_{parts[2]}"
     return parts[1] if len(parts) > 1 else parts[0]
+
+
+def e2e_obligations(all_obs: list, cfg: dict) -> list:
+    """Select E2E categories, minus exact project-configured obligation IDs."""
+    exclude_ids = set(cfg["e2e"]["exclude_ids"])
+    known_ids = {ob["id"] for ob in all_obs}
+    unknown_ids = exclude_ids - known_ids
+    if unknown_ids:
+        sys.exit(
+            "Config e2e.exclude_ids contains unknown obligation IDs: "
+            + ", ".join(sorted(unknown_ids))
+        )
+    return [
+        ob
+        for ob in all_obs
+        if ob["category"] in E2E_CATEGORIES and ob["id"] not in exclude_ids
+    ]
 
 
 def snake_name(value: str) -> str:
@@ -497,8 +523,8 @@ def main():
     data = run_plan(spec_path, cfg["root"])
     all_obs = data.get("obligations", [])
 
-    # Filter to E2E-relevant
-    e2e_obs = [ob for ob in all_obs if ob["category"] in E2E_CATEGORIES]
+    # Filter to E2E-relevant, publicly observable obligations
+    e2e_obs = e2e_obligations(all_obs, cfg)
 
     # Split by layer
     by_layer = defaultdict(list)

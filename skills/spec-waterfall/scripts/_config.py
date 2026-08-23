@@ -17,6 +17,7 @@ def positional_args(argv: list) -> list:
 DEFAULTS = {
     "layers": {"default": "api", "surfaces": "browser", "rules": {}, "entities": {}},
     "tiers": {"entities": {}},
+    "e2e": {"exclude_ids": []},
 }
 
 
@@ -48,6 +49,12 @@ def load_config(argv: list) -> dict:
     layers = {**DEFAULTS["layers"], **cfg.get("layers", {})}
     cfg["layers"] = layers
     cfg["tiers"] = {**DEFAULTS["tiers"], **cfg.get("tiers", {})}
+    cfg["e2e"] = {**DEFAULTS["e2e"], **cfg.get("e2e", {})}
+    exclude_ids = cfg["e2e"]["exclude_ids"]
+    if not isinstance(exclude_ids, list) or not all(
+        isinstance(obligation_id, str) for obligation_id in exclude_ids
+    ):
+        sys.exit(f"Config {path} e2e.exclude_ids must be a list of obligation ID strings")
 
     names = {layers["default"], layers["surfaces"]}
     names.update(layers["rules"].values())

@@ -29,6 +29,7 @@ def config(tests_dir):
             "entities": {},
         },
         "tiers": {"entities": {}},
+        "e2e": {"exclude_ids": []},
     }
 
 
@@ -47,6 +48,65 @@ class PlanToTestsTest(unittest.TestCase):
                 {path.name for path in outputs},
                 {"test_gen_api_register.py", "test_gen_api_login.py"},
             )
+
+    def test_surface_guarantees_get_one_file_per_surface_and_guarantee(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cfg = config(Path(directory))
+            obligations = [
+                {
+                    "id": "surface-guarantee.Console.SetupProgress",
+                    "category": "surface_guarantee",
+                    "description": "Console reports setup progress",
+                },
+                {
+                    "id": "surface-guarantee.Console.NoExistenceLeak",
+                    "category": "surface_guarantee",
+                    "description": "Console does not leak existence",
+                },
+            ]
+
+            outputs = subject.build_test_outputs(obligations, cfg, {})
+
+            self.assertEqual(
+                {path.name for path in outputs},
+                {
+                    "test_gen_browser_console_no_existence_leak.py",
+                    "test_gen_browser_console_setup_progress.py",
+                },
+            )
+
+    def test_e2e_exclude_ids_removes_only_exact_obligation(self):
+        cfg = config(Path("tests"))
+        cfg["e2e"]["exclude_ids"] = ["surface-guarantee.Console.InternalOnly"]
+        obligations = [
+            obligation(),
+            {
+                "id": "surface-guarantee.Console.InternalOnly",
+                "category": "surface_guarantee",
+                "description": "Not publicly observable",
+            },
+            {
+                "id": "surface-guarantee.Console.PublicResult",
+                "category": "surface_guarantee",
+                "description": "Publicly observable",
+            },
+        ]
+
+        selected = subject.e2e_obligations(obligations, cfg)
+
+        self.assertEqual(
+            [ob["id"] for ob in selected],
+            ["rule-success.Register", "surface-guarantee.Console.PublicResult"],
+        )
+
+    def test_e2e_exclude_ids_rejects_unknown_obligation(self):
+        cfg = config(Path("tests"))
+        cfg["e2e"]["exclude_ids"] = ["surface-guarantee.Console.Misspelled"]
+
+        with self.assertRaises(SystemExit) as raised:
+            subject.e2e_obligations([obligation()], cfg)
+
+        self.assertIn("unknown obligation IDs", str(raised.exception))
 
     def test_preserves_unchanged_body_signature_and_custom_decorator(self):
         with tempfile.TemporaryDirectory() as directory:

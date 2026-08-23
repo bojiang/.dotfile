@@ -16,5 +16,8 @@
     "entities": {
       "ExampleAsyncEntity": "minutes"
     }
+  },
+  "e2e": {
+    "exclude_ids": []
   }
 }

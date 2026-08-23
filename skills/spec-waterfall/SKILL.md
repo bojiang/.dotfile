@@ -146,8 +146,9 @@ Mechanical derivation, then agent completion:
 1. `plan_to_tests.py --write` generates one test skeleton per E2E-relevant
    obligation: each rule with N `requires` clauses yields N rejection tests,
    each transition graph yields rejected-transition tests, each `when` field
-   yields presence/absence tests. The spec defines happy paths; the derivation
-   produces the failure paths.
+   yields presence/absence tests, and each surface `@guarantee` yields its own
+   test file grouped as `<surface>_<guarantee>`. The spec defines happy paths;
+   the derivation produces the failure paths.
 2. The agent implements skeleton bodies **from the spec text only** — the
    obligation's description and its source rule. Never from the implementation.
 3. Regeneration does not overwrite implemented test bodies; `--diff` shows
@@ -198,7 +199,9 @@ state, and no other obligation's artifact.
 - **After a spec rework**: every obligation `plan_to_tests.py --diff` reports
   as added or modified gets its test body AND implementation unit deleted and
   re-derived. No merging old into new. Obligations the diff does not touch
-  keep their artifacts.
+  keep their artifacts. A changed `e2e.exclude_ids` selection likewise changes
+  the generated manifest: newly included obligations must be independently
+  derived; excluded obligations lose their generated artifacts.
 
 ### Rework log
 
@@ -233,6 +236,11 @@ location with `--config`). All paths are relative to the config file:
   obligation group gets a small `test_gen_<layer>_<group>.py` file
 - `tiers.entities` — map entities materialized by out-of-band pipelines to
   `minutes` (temporal obligations are `hours` automatically)
+- `e2e.exclude_ids` — exact obligation IDs to omit when a specific obligation
+  cannot be observed through any public UI or API. Unknown IDs are rejected so
+  spec drift or typos cannot silently reduce coverage. Do not use this as a
+  category or pattern filter; prefer correcting obligations that violate the
+  Stage 1 altitude rule.
 
 Layer and tier semantics live in the config, not in the spec — the spec stays
 at user altitude. `templates/spec-waterfall.json` is a starting point.
