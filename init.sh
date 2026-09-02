@@ -23,6 +23,7 @@ mkdir -p $BACKUP_DIR/.config
 mkdir -p $BACKUP_DIR/.claude
 mkdir -p $BACKUP_DIR/.claude/hooks
 mkdir -p $BACKUP_DIR/.codex
+mkdir -p $BACKUP_DIR/.pi/agent/extensions
 mkdir -p $BACKUP_DIR/.local/bin
 
 mkdir -p $HOME/.cache/vimundo
@@ -30,6 +31,7 @@ mkdir -p $HOME/.config
 mkdir -p $HOME/.local/bin
 mkdir -p $HOME/.claude
 mkdir -p $HOME/.codex
+mkdir -p $HOME/.pi/agent/extensions
 
 targets=".oh-my-zsh .config/nvim .tmux .tmux.conf .profile .local/bin/docker-clean"
 
@@ -53,6 +55,12 @@ ln -s $PWD/git/.gitconfig $HOME/.gitconfig
 ln -s $PWD/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 ln -s $PWD/.claude/CLAUDE.md $HOME/.codex/AGENTS.md
 ln -s $PWD/.codex/hooks.json $HOME/.codex/hooks.json
+[ -e $HOME/.pi/agent/AGENTS.md -o -L $HOME/.pi/agent/AGENTS.md ] && mv $HOME/.pi/agent/AGENTS.md $BACKUP_DIR/.pi/agent/AGENTS.md
+ln -s $PWD/.pi/agent/AGENTS.md $HOME/.pi/agent/AGENTS.md
+[ -e $HOME/.pi/agent/extensions/state-hooks.ts -o -L $HOME/.pi/agent/extensions/state-hooks.ts ] && mv $HOME/.pi/agent/extensions/state-hooks.ts $BACKUP_DIR/.pi/agent/extensions/state-hooks.ts
+ln -s $PWD/.pi/extensions/state-hooks.ts $HOME/.pi/agent/extensions/state-hooks.ts
+[ -e $HOME/.pi/agent/skills -o -L $HOME/.pi/agent/skills ] && mv $HOME/.pi/agent/skills $BACKUP_DIR/.pi/agent/skills
+ln -s $PWD/.pi/agent/skills $HOME/.pi/agent/skills
 [ -e $HOME/.claude/hooks -o -L $HOME/.claude/hooks ] && mv $HOME/.claude/hooks $BACKUP_DIR/.claude/hooks
 ln -s $PWD/.claude/hooks $HOME/.claude/hooks
 [ -e $HOME/.claude/agents -o -L $HOME/.claude/agents ] && mv $HOME/.claude/agents $BACKUP_DIR/.claude/agents
