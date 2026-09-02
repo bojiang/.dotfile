@@ -17,7 +17,7 @@
 4. 设计阶段不需要考虑向前兼容
 5. 解决问题时，先思考减法能否解决问题。很多问题的根源是状态不正交。减法的修复思路可以保证之后的可维护性
 6. git 多 agent 并行：任何 git 读操作先确认当前分支是预期分支；任何 git 写/提交先 fetch 并确认分支干净
-7. worktree 隔离：代码修改必须在独立 git worktree 中进行（知识修改原地修改即可），路径统一放 `.worktrees/<name>`；每波次修改后提交commit合入main，不在 worktree 停留
+7. worktree 隔离：如果当前目录有未提交代码（.agent/*、文档不算），必须在独立 git worktree 中进行，路径统一放 `.worktrees/<name>`；每波次修改后提交commit合入main，不在 worktree 停留
 
 # 目录
 你所处的目录遵守以下约定：

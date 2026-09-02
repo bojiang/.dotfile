@@ -21,7 +21,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH=/opt/homebrew/bin:/Users/agent/Library/Python/3.9/bin/:$PATH
 fi
 
-export ZSH_AI_COMMANDS_OPENAI_API_KEY=$OPENAI_API_KEY
+# export ZSH_AI_COMMANDS_OPENAI_API_KEY=$OPENAI_API_KEY
 
 alias vim=nvim
 
