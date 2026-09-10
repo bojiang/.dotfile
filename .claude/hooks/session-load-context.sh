@@ -14,6 +14,17 @@ $(cat "$STATE_INDEX")
 "
 fi
 
+# Load state topic names
+STATE_DIR="$AGENT_DIR/state"
+if [ -d "$STATE_DIR" ]; then
+  TOPICS=$(find "$STATE_DIR" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
+  if [ -n "$TOPICS" ]; then
+    CONTEXT+="
+=== State Topics ===
+$TOPICS"
+  fi
+fi
+
 # Load recent 3 backlogs (by directory name, sorted reverse)
 BACKLOG_DIR="$AGENT_DIR/backlogs"
 if [ -d "$BACKLOG_DIR" ]; then
