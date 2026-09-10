@@ -21,11 +21,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH=/opt/homebrew/bin:/Users/agent/Library/Python/3.9/bin/:$PATH
 fi
 
-# export ZSH_AI_COMMANDS_OPENAI_API_KEY=$OPENAI_API_KEY
-
 alias vim=nvim
 
-plugins=(git kubectl docker zsh-interactive-cd systemd zsh-ai-commands)
+plugins=(git kubectl docker zsh-interactive-cd systemd)
 
 source $ZSH/oh-my-zsh.sh
 
