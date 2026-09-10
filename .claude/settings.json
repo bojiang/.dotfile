@@ -5,7 +5,7 @@
     ],
     "defaultMode": "dontAsk"
   },
-  "model": "claude-fable-5",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
