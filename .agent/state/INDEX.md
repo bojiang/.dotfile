@@ -9,6 +9,10 @@ Project-agnostic waterfall vibe-coding skill at `skills/spec-waterfall/`: ideati
 - [implementation/INDEX.md](spec-waterfall-skill/implementation/INDEX.md) — file map, generalization mechanism, verified sanitization status
 - Known defects pending repair: plan_to_tests.py regeneration drops module preludes; its parser chokes on 3.12-only f-strings — see [backlog 003](../backlogs/003_plan-to-tests-regen-defects/INDEX.md)
 
+## benchmark-skill
+Reproducible benchmark/experiment pipeline skill at `skills/benchmark/`: script-only execution, frozen 4-stage pipeline (collect_script -> collect_output -> analysis_script -> analysis_output), round-based iteration with full copy, maximum raw data retention.
+- [usage/INDEX.md](benchmark-skill/usage/INDEX.md) — when to use, key invariants
+
 ## coding-agent-knowledge-persistence
 State-keeper subagent + Stop-hook fuse that persists costly-and-stable conclusions into .agent/state/.
 - [implementation/INDEX.md](coding-agent-knowledge-persistence/implementation/INDEX.md) — current mechanism, file map, design trade-offs/rejected alternatives, and hook/agent platform gotchas hit while building it
