@@ -40,4 +40,5 @@ benchmarks/
 - Each round is self-contained. Want to change anything frozen → new round (copy scripts, regenerate outputs).
 - Same collect data, different analysis → new round with `2_collect_output` symlinked to the source round's.
 - Raw data: per-record, never pre-aggregated. Capture more than the report needs, but not so much it drags the experiment.
+- `invoke.sh` uses relative paths only. No absolute paths, no environment variables.
 
