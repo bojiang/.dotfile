@@ -22,6 +22,7 @@ mkdir -p $BACKUP_DIR/git
 mkdir -p $BACKUP_DIR/.config
 mkdir -p $BACKUP_DIR/.claude
 mkdir -p $BACKUP_DIR/.claude/hooks
+mkdir -p $BACKUP_DIR/.claude/skills
 mkdir -p $BACKUP_DIR/.codex
 mkdir -p $BACKUP_DIR/.pi/agent/extensions
 mkdir -p $BACKUP_DIR/.local/bin
@@ -67,6 +68,12 @@ ln -s $PWD/.claude/hooks $HOME/.claude/hooks
 ln -s $PWD/.claude/agents $HOME/.claude/agents
 [ -e $HOME/.claude/settings.json -o -L $HOME/.claude/settings.json ] && mv $HOME/.claude/settings.json $BACKUP_DIR/.claude/settings.json
 ln -s $PWD/.claude/settings.json $HOME/.claude/settings.json
+mkdir -p $HOME/.claude/skills
+for skill in $PWD/skills/*/; do
+	name=$(basename "$skill")
+	[ -e "$HOME/.claude/skills/$name" -o -L "$HOME/.claude/skills/$name" ] && mv "$HOME/.claude/skills/$name" "$BACKUP_DIR/.claude/skills/$name"
+	ln -s "$skill" "$HOME/.claude/skills/$name"
+done
 
 # .zshrc is a local file (not a symlink) so host-side edits don't pollute the template.
 [ -e $HOME/.zshrc -o -L $HOME/.zshrc ] && mv $HOME/.zshrc $BACKUP_DIR/.zshrc
