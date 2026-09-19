@@ -23,7 +23,7 @@ Encoded in .claude/CLAUDE.md (`# 目录` section) and .claude/agents/state-keepe
 - .codex/hooks.json — registers the same SessionStart loader for Codex.
 - .pi/extensions/state-hooks.ts — invokes the same loader on Pi's `session_start` event and forwards its returned context to the first agent turn.
 - .claude/hooks/confirmo.sh — guard script for the machine-optional confirmo tool; exits 0 when ~/.confirmo or node is absent
-- init.sh — installs the global Claude, Codex, and Pi hook wiring: it symlinks `.claude/{CLAUDE.md,hooks,agents,settings.json}` into `~/.claude`, `.codex/hooks.json` into `~/.codex`, and `.pi/extensions/state-hooks.ts` into Pi's extension directory.
+- init.sh — installs the global Claude, Codex, and Pi hook wiring: it symlinks `.claude/{CLAUDE.md,hooks,agents,settings.json}` into `~/.claude`, each `skills/*/` entry into `~/.claude/skills/` (per-entry, preserving non-managed siblings), `.codex/hooks.json` into `~/.codex`, and `.pi/extensions/state-hooks.ts` into Pi's extension directory.
 
 ## SessionStart scope
 The shared context loader applies to Claude Code, Codex, and Pi when their
